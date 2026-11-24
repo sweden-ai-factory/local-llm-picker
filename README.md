@@ -88,15 +88,7 @@ node build.mjs
 
 This writes `dist/Local-LLM-Picker-plain.html`: the whole tool in one offline file, with the open theme from `src/theme/` (system fonts, no font files, no network) and the Sweden AI Factory logo, without RISE branding. The build stops if the file would load anything from the internet, embed a font or contain a personal file path.
 
-The file in the releases is the branded version. It uses the RISE design system, which is not part of this repository, so only people who have that design system can build it. If you do, build it with
-
-```
-THEME=rise node build.mjs                 # PowerShell: $env:THEME='rise'; node build.mjs
-```
-
-It writes `dist/Local-LLM-Picker.src.html` and runs the design-system build script, which inlines the RISE fonts, styles, scripts and logo into `dist/Local-LLM-Picker.html`. It needs Python 3. Set `RISE_BUILD` to the script's path (default: `~/.claude/skills/rise-design/scripts/build.py`) and `PYTHON` to the Python command if needed.
-
-Other variables: `DATA_DIR` (a different data folder) and `OUT` (a different output file). Markup that belongs to one theme only is marked in `src/index.template.html` with `<!--THEME:rise-->…<!--/THEME:rise-->` or `<!--THEME:open-->…<!--/THEME:open-->`.
+The file in the releases is the branded version. It uses the RISE design system, which is not part of this repository, so only people who have that design system can build it.
 
 ## Credits
 
