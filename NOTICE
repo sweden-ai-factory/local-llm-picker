@@ -1,0 +1,24 @@
+Local LLM Picker
+Copyright 2026 Benedikt Neyses and Erdzan Hodzic
+
+Created with help from Claude (Anthropic).
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The following are NOT covered by that licence and remain under the terms of their owners:
+
+1. Logos. The Sweden AI Factory logo (src/img/sweden-ai-factory.webp) and the RISE, Research
+   Institutes of Sweden, mark and name are trademarks of their owners. They are shown in the tool to
+   say where it comes from. Using them in other work needs permission from the owners.
+
+2. RISE design system. The branded release file (Local-LLM-Picker.html, built with THEME=rise)
+   contains the stylesheet, scripts, icons and fonts of the RISE design system (including the fonts
+   Code Pro, Lato and Roboto Mono), which are inlined by the build step. They are not part of this
+   repository's source and keep their own licence terms. The default build
+   (dist/Local-LLM-Picker-plain.html, made with the open theme in src/theme/, which is part of this
+   repository and licensed under Apache 2.0) contains none of them.
+
+3. Third-party names and facts. Names of models, companies, products, graphics cards and services
+   mentioned in the data belong to their owners. The data files were compiled from public pages of those
+   vendors and providers, and from published benchmark reports, as listed in the notes files in data/.
+   Prices and specifications change; check the original source before relying on them.

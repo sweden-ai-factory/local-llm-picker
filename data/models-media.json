@@ -1,0 +1,2363 @@
+[
+  {
+    "id": "minimax-h3-image",
+    "name": "MiniMax-H3-Image",
+    "family": "MiniMax H3",
+    "lab": "MiniMax",
+    "released": "2026-11",
+    "kind": "image",
+    "also_edits": true,
+    "params_total_b": 33.1,
+    "components": [
+      {
+        "name": "Qwen3-VL-32B text encoder (from MiniMax-H3, downloaded separately)",
+        "params_b": 33.4
+      },
+      {
+        "name": "Image VAE (CNN encoder + ViT decoder)",
+        "params_b": 0.6
+      },
+      {
+        "name": "Prompt expander, optional (MiniMax-H3-Image-PE, Qwen3.8-27B based)",
+        "params_b": 27.4
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 66.3,
+      "int8": 21,
+      "w4a8": 12.6,
+      "q8_gguf": 22,
+      "q4_gguf": 12.7
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 66.7,
+    "text_encoder_gb_by_precision": {
+      "bf16": 66.7,
+      "int8": 27.1,
+      "nvfp4": 15.7
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 48,
+      "minimum_with_offload": 12,
+      "note": "48 GB keeps ComfyUI's int8 DiT (21 GB) and int8 text encoder (27 GB) on the GPU (estimate). One user ran it on a 12 GB RTX 4070 SUPER in ComfyUI by streaming the DiT from system RAM, with about 41 GB of 96 GB RAM in use, so plan on 64 GB or more system RAM. The official bf16 path (SGLang, Diffusers) loads about 135 GB of weights: H200-class or several GPUs."
+    },
+    "typical_output": "2048x2048 (4 MP) image, 6 steps, no CFG; tuned for up to 16 MP (4096x4096)",
+    "typical_workload": {
+      "megapixels": 4.19,
+      "steps": 6
+    },
+    "speed_reference": {
+      "gpu": "RTX 4070 SUPER 12 GB (96 GB system RAM)",
+      "gpu_id_hint": "GeForce RTX 4070 SUPER",
+      "value": "≈ 11-12 s per 4 MP image, ≈ 41 s per 16 MP image (int8, warm, 6 steps, diffusion model streamed from system RAM)",
+      "seconds": 11.5,
+      "precision": "int8",
+      "offloaded": true,
+      "source": "https://huggingface.co/Comfy-Org/MiniMax-H3-Image/discussions/12",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Always uses 6 steps. In the reported tests, four times the pixels took about four times as long. Each reference image adds work: one 4-megapixel reference raised the time per step from 1.1 to 1.7 seconds. The first picture after starting takes about twice as long while the model loads.",
+    "output_limits": "Pictures of about 4 to 20 megapixels, best near 16 (for example 4096 x 4096 or 6272 x 2688 pixels), in any width-to-height ratio; each side must be a multiple of 32 pixels. One model creates images from text and edits them, using up to 16 reference images. Works best with long, detailed English descriptions (an optional helper model can expand yours), and there is no way to list things you do not want in the picture.",
+    "license": "MiniMax-H3-Image Community License Agreement",
+    "license_note": "Not licensed for use in the EU, UK, South Korea or USA. Elsewhere it is free to use, also commercially, unless your company earns more than US$1 million a year or you offer it as an online service; then you need written permission. Commercial products must display \"MiniMax-H3-Image\".",
+    "tier": "frontier-class",
+    "good_for": "Rated highest among open models for new images and for edits; makes very large, detailed pictures of up to 16 megapixels.",
+    "weak_at": "Not licensed in the EU, UK, South Korea or USA.",
+    "hf_repo": "MiniMaxAI/MiniMax-H3-Image",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "SGLang",
+      "vLLM-Omni",
+      "LightX2V",
+      "DiffSynth-Studio"
+    ],
+    "notes": "The text encoder (the part that reads your prompt) is very large: 66.7 GB as released, or 27.1 GB (8-bit) and 15.7 GB (4-bit) in ComfyUI's versions. ComfyUI's smaller versions of the main model are trimmed to about 20 billion parameters without saying what was removed, and a ComfyUI developer recommends the 8-bit one for quality. The 12 GB minimum and the speed come from one user, who streamed the model from system memory, so plan on 64 GB or more of system memory."
+  },
+  {
+    "id": "qwen-image-2.1",
+    "name": "Qwen-Image-2.1",
+    "family": "Qwen-Image",
+    "lab": "Alibaba Qwen",
+    "released": "2026-09",
+    "kind": "image",
+    "also_edits": true,
+    "params_total_b": 7.1,
+    "components": [
+      {
+        "name": "Qwen3-VL-8B text encoder",
+        "params_b": 8.8
+      },
+      {
+        "name": "VAE (4-channel, supports transparency)",
+        "params_b": 0.34
+      },
+      {
+        "name": "Prompt enhancer, optional (Qwen-Image-2.1-PE, Qwen3.5-9B based)",
+        "params_b": 9.4
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 14.2,
+      "int8": 7.3,
+      "q8_gguf": 7.6,
+      "q4_gguf": 4.2
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 17.5,
+    "text_encoder_gb_by_precision": {
+      "bf16": 17.5,
+      "int8": 9.4,
+      "w4a8": 6.3
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 4.7,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 8,
+      "note": "Measured by a user in Diffusers on an RTX 5090: fp8 DiT and text encoder peak at 21.3 GB (1024x1024) and 22.6 GB (2048x2048); NF4 peaks at 15.2 GB. ComfyUI's int8 build ran on a 16 GB RTX 4060 Ti with no offloading. The 8 GB minimum is an estimate that relies on ComfyUI offloading to system RAM (32 GB RAM or more)."
+    },
+    "typical_output": "1024x1024 to 2048x2048 image, 25-40 steps (Turbo checkpoint: 8 steps)",
+    "typical_workload": {
+      "megapixels": 1.05,
+      "steps": 40
+    },
+    "speed_reference": {
+      "gpu": "RTX 5090",
+      "gpu_id_hint": "GeForce RTX 5090",
+      "value": "≈ 19 s per 1024x1024 image, ≈ 116 s per 2048x2048 image (fp8, 40 steps, Diffusers)",
+      "seconds": 19.3,
+      "precision": "fp8",
+      "offloaded": false,
+      "source": "https://huggingface.co/Qwen/Qwen-Image-2.1/discussions/32",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Total time is the number of steps times the time per step. The time per step grows faster than the pixel count: four times the pixels took six times as long in one test, and ComfyUI's guide gives about 0.3 seconds per step at 1 megapixel against 6 seconds at 12 megapixels on an RTX 5090. The 8-step Turbo version is roughly 3 to 5 times faster than the usual 25 to 40 steps. In edits, large reference images cost the most time; shrinking them to about 1 megapixel speeds things up.",
+    "output_limits": "Made for 2K (2048 x 2048 pixels, with presets up to 2752 x 1536); above 2K it follows the description less closely. Creates images from text and edits them with up to 10 reference images (ComfyUI's guide says 16), including edits to areas you circle or mask. It can output transparent backgrounds and renders text well.",
+    "license": "Qwen Research License Agreement",
+    "license_note": "Non-commercial only (research or evaluation). Any commercial use needs a separate licence from the Qwen team.",
+    "tier": "frontier-class",
+    "good_for": "Clear text inside images, pictures with transparent backgrounds, and edits that combine many reference images, at 2K resolution.",
+    "weak_at": "Non-commercial licence (research and evaluation only).",
+    "hf_repo": "Qwen/Qwen-Image-2.1",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "stable-diffusion.cpp",
+      "mflux"
+    ],
+    "notes": "An official 8-step Turbo version has the same size and licence. At 16-bit the download is 33.1 GB: 14.2 GB for the main model, 17.5 GB for the text encoder (the part that reads your prompt) and 1.35 GB for the image decoder. ComfyUI also offers the text encoder at 9.4 GB (8-bit) or 6.3 GB (4-bit)."
+  },
+  {
+    "id": "flux3-image-klein",
+    "name": "FLUX 3 Image Klein",
+    "family": "FLUX 3",
+    "lab": "Black Forest Labs",
+    "released": "2026-10",
+    "kind": "image-edit",
+    "also_edits": true,
+    "params_total_b": 5.5,
+    "components": [
+      {
+        "name": "Qwen3-VL-4B-Instruct text encoder",
+        "params_b": 4.4
+      },
+      {
+        "name": "FLUX.2 VAE",
+        "params_b": 0.08
+      },
+      {
+        "name": "Prompt upsampler, required by BFL (flux-3-image-klein-pup, Qwen3.5-9B based)",
+        "params_b": 9.4
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 11.1,
+      "fp8": 6.3,
+      "int8": 5.8,
+      "nvfp4": 5.3,
+      "q8_gguf": 6.1,
+      "q4_gguf": 3.7
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 8.9,
+    "text_encoder_gb_by_precision": {
+      "bf16": 8.9,
+      "int8": 4.9
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 2,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 8,
+      "note": "BFL and the Comfy card say the int8 build runs on 8 GB RTX cards (e.g. RTX 3070); a community guide adds that you need about 32 GB system RAM. BFL measured peaks of 31 GB (bf16), 26 GB (fp8) and 25 GB (nvfp4) at 1024x1024 with everything kept on a B200 and the upsampler off; the unquantized upsampler adds about 28 GB. ComfyUI docs suggest the bf16 files only above 24 GB."
+    },
+    "typical_output": "1024x1024 image or edit, 16 steps, no CFG (base checkpoint: 50 steps)",
+    "typical_workload": {
+      "megapixels": 1.05,
+      "steps": 16
+    },
+    "speed_reference": {
+      "gpu": "RTX 5090",
+      "gpu_id_hint": "GeForce RTX 5090",
+      "value": "≈ 4 s per 1 MP image (int8, distilled, ComfyUI); under 9 s on an RTX 4070",
+      "seconds": 4,
+      "precision": "int8",
+      "offloaded": false,
+      "source": "https://bfl.ai/blog/flux-3-image-klein",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "Total time is the number of steps times the time per step. The fast version runs 4 to 16 steps; the base version runs 50 steps, each done twice for guidance, and is several times slower. The time per step grows with the pixels of the output and of the reference images (ComfyUI's templates shrink each reference to about 1 megapixel). The prompt rewriter, a 9B language model that first writes a long description, adds time that Black Forest Labs' figures leave out.",
+    "output_limits": "Edits images from instructions and creates them from text, with up to 10 reference images; you can mark where things go with boxes in the prompt. Black Forest Labs does not state a maximum size (ComfyUI's templates use 1 megapixel). Text in images works but can come out distorted. Short descriptions give generic results unless the prompt rewriter is switched on.",
+    "license": "FLUX Kommunity License v1.0",
+    "license_note": "Free for non-commercial use. Commercial use of the images is allowed only if your organisation's yearly revenue is under US$5 million, and you must filter or review what it makes. No country exclusions were found. The parts that read and rewrite your prompt are under the permissive Apache 2.0 licence.",
+    "tier": "strong",
+    "good_for": "Edits photos from plain instructions, using up to 10 reference images; ranked third among open models despite its small size.",
+    "weak_at": "Mixed feedback on faces, and commercial use only below US$5 million revenue.",
+    "hf_repo": "black-forest-labs/flux-3-image-klein",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "stable-diffusion.cpp",
+      "mflux"
+    ],
+    "notes": "When switched on, the prompt rewriter needs its own memory (18.8 GB at 16-bit, 9.8 GB at 8-bit or 6.7 GB at 4-bit), and it can be unloaded before the picture is made. The 8-bit (INT8) version also works on RTX 30-series cards; the 4-bit NVFP4 version needs an RTX 50-series card. Early user feedback on Hugging Face is mixed, with complaints about faces and bodies, so portraits may be weaker than its ranking suggests."
+  },
+  {
+    "id": "hidream-o1-image",
+    "name": "HiDream-O1-Image",
+    "family": "HiDream-O1",
+    "lab": "HiDream.ai",
+    "released": "2026-05",
+    "kind": "image",
+    "also_edits": true,
+    "params_total_b": 8.8,
+    "components": [
+      {
+        "name": "Prompt agent, optional (HiDream Prompt-Refine, Gemma-4-31B based; ComfyUI templates use Gemma 4 E4B)",
+        "params_b": 31.3
+      }
+    ],
+    "native_precision": "bf16 (repo stores fp32)",
+    "weights_gb_by_precision": {
+      "fp32": 35.2,
+      "bf16": 16.4,
+      "fp8": 8.1,
+      "mxfp8": 8.9,
+      "q8_gguf": 9.3,
+      "q4_gguf": 5.5
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 12,
+      "note": "No separate text encoder or VAE to load. A user reports the bf16 file only just fits a 16 GB RTX 4060 Ti at 2048x2048; the fp8 file (8.1 GB) leaves more room. The 12 GB minimum with fp8 is an estimate."
+    },
+    "typical_output": "2048x2048 image, 50 steps (Dev variant: 28 steps); speed reference measured at 12 steps",
+    "typical_workload": {
+      "megapixels": 4.19,
+      "steps": 12
+    },
+    "speed_reference": {
+      "gpu": "RTX 4060 Ti 16 GB",
+      "gpu_id_hint": "GeForce RTX 4060 Ti 16GB",
+      "value": "≈ 29 s per 2048x2048 image at 12 steps (bf16); ≈ 24 s with fp8",
+      "seconds": 29,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://huggingface.co/Comfy-Org/HiDream-O1-Image/discussions/10",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "About 2 to 2.5 seconds per step at 2048 x 2048 on an RTX 4060 Ti, so the full model's official 50 steps take roughly 2 minutes there and the 28-step Dev version roughly 1 minute (estimated from the measured step time). The model works directly on pixels, so time rises quickly with resolution.",
+    "output_limits": "Up to 2048 x 2048 pixels. One model creates images from text, renders long text, edits from instructions (one reference image), puts a chosen person or object into new scenes and makes storyboards.",
+    "license": "MIT",
+    "license_note": "Permissive: commercial use allowed. The optional prompt helper, based on Gemma, has its own licence.",
+    "tier": "strong",
+    "good_for": "One MIT-licensed model for new images, edits, pictures of a chosen person or object, and long text, at 2K.",
+    "weak_at": "Slow at the official 28 to 50 steps, and rated below the 2026 leaders.",
+    "hf_repo": "HiDream-ai/HiDream-O1-Image",
+    "tools": [
+      "ComfyUI",
+      "Transformers (HiDream reference code)"
+    ],
+    "notes": "The model reads your prompt itself, so there is no separate text encoder; the optional prompt helper is not counted in the memory figure. The lab's own code needs the flash-attn add-on or a one-line change, and the community compact files have not been checked with common loaders. On RTX 40 cards with enough graphics memory, one user found an 8-bit version (MXFP8) slower than the 16-bit one."
+  },
+  {
+    "id": "krea-2-turbo",
+    "name": "Krea 2 Turbo",
+    "family": "Krea 2",
+    "lab": "Krea",
+    "released": "2026-06",
+    "kind": "image",
+    "also_edits": false,
+    "params_total_b": 12.8,
+    "components": [
+      {
+        "name": "Qwen3-VL-4B text encoder",
+        "params_b": 4.4
+      },
+      {
+        "name": "Qwen-Image VAE",
+        "params_b": 0.13
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 26.3,
+      "fp8": 13.1,
+      "int8": 13.5,
+      "nvfp4": 7.7,
+      "q8_gguf": 13.7,
+      "q4_gguf": 7.5
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 8.9,
+    "text_encoder_gb_by_precision": {
+      "bf16": 8.9,
+      "fp8": 5.2,
+      "int8": 4.9
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 1.5,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 8,
+      "note": "Several users report it runs on 8 GB cards (RTX 3060 Ti, RTX A2000) in ComfyUI with fp8 weights streamed from system RAM (24-32 GB RAM suggested), at about 3.9 s per step on a 3060 Ti. 24 GB keeps the fp8 model and text encoder on the GPU (estimate)."
+    },
+    "typical_output": "1024x1024 to 2048x2048 image, 8 steps (Raw: 52 steps)",
+    "typical_workload": {
+      "megapixels": 1.33,
+      "steps": 8
+    },
+    "speed_reference": {
+      "gpu": "RTX 5080",
+      "gpu_id_hint": "GeForce RTX 5080",
+      "value": "≈ 11.6 s per 864x1536 image, 8 steps, with Comfy's nvfp4 file as shipped (4.6 s after removing one header flag)",
+      "seconds": 11.6,
+      "precision": "nvfp4 (as shipped, runs at about bf16 speed)",
+      "offloaded": false,
+      "source": "https://huggingface.co/Comfy-Org/Krea-2/discussions/25",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Turbo always uses 8 steps; the Raw version uses 52 steps, each run twice for guidance, and is roughly 10 times slower. The time per step grows with pixel count, so a 2-megapixel image takes at least twice as long as a 1-megapixel one (estimate).",
+    "output_limits": "Creates images from text only, at about 1,000 to 2,000 pixels per side; there is no official editing.",
+    "license": "Krea 2 Community License",
+    "license_note": "Commercial use of the model and its images is allowed only if your company's total yearly revenue is under US$1 million; above that you need an enterprise licence. If you offer it to others, you must add content filtering. No country exclusions were found.",
+    "tier": "strong",
+    "good_for": "Often praised for attractive, stylised pictures in a wide range of styles, with official style add-ons (LoRAs).",
+    "weak_at": "Cannot edit images, and its quality has not been independently ranked yet.",
+    "hf_repo": "krea/Krea-2-Turbo",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "SGLang",
+      "mflux"
+    ],
+    "notes": "On a Mac, one user reported about 146 seconds per 1024 x 1024 image on a 16 GB M1 Pro MacBook (in the Siliconed app). On AMD graphics, one user reported about 9 seconds per 1-megapixel image on an RX 9070 XT with the 8-bit (INT8) version."
+  },
+  {
+    "id": "ideogram-4",
+    "name": "Ideogram 4",
+    "family": "Ideogram 4",
+    "lab": "Ideogram",
+    "released": "2026-06",
+    "kind": "image",
+    "also_edits": false,
+    "params_total_b": 18.6,
+    "components": [
+      {
+        "name": "Qwen3-VL-8B-Instruct text encoder",
+        "params_b": 8.8
+      },
+      {
+        "name": "FLUX.2 VAE",
+        "params_b": 0.08
+      }
+    ],
+    "native_precision": "fp8 (no bf16 weights published)",
+    "weights_gb_by_precision": {
+      "fp8": 18.6,
+      "int8": 19.2,
+      "nvfp4": 11,
+      "nf4": 10.4,
+      "q4_gguf": 11.2
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 10.6,
+    "text_encoder_gb_by_precision": {
+      "fp8": 10.6,
+      "nvfp4": 6.3
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 2.5,
+    "vram_gb": {
+      "comfortable": 32,
+      "minimum_with_offload": 16,
+      "note": "Two 9.3 GB fp8 transformers (with and without the prompt) plus a 10.6 GB fp8 text encoder are about 29 GB of weights, which a 32 GB RTX 5090 holds. Users run it on 16 GB RTX 4060 Ti cards in ComfyUI with offloading. The 16 GB minimum is an estimate from those reports."
+    },
+    "typical_output": "Up to 2048x2048 image, 48 steps with CFG (presets: 20 and 12 steps)",
+    "typical_workload": {
+      "megapixels": 2.23,
+      "steps": 48
+    },
+    "speed_reference": {
+      "gpu": "RTX 5090",
+      "gpu_id_hint": "GeForce RTX 5090",
+      "value": "≈ 2.6 s per step at 2048x1088 (≈ 1.7 s with flash attention), so ≈ 125 s (≈ 82 s) per 48-step image (fp8)",
+      "seconds": 125,
+      "precision": "fp8",
+      "offloaded": false,
+      "source": "https://huggingface.co/Comfy-Org/Ideogram-4/discussions/6",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Every step runs both of its models (for guidance), so a step costs about twice a single pass. The default is 48 steps; the 20-step and 12-step presets are about 2.4 and 4 times faster, with some loss of quality. The time per step grows with pixel count.",
+    "output_limits": "Creates images from text only, at any size from 256 to 2048 pixels per side (multiples of 16) and shapes up to 6:1. Very clear lettering in images, in several languages. You can describe the layout in a structured text format (JSON), mark positions with boxes and give exact colours as colour codes.",
+    "license": "Ideogram 4 Non-Commercial License",
+    "license_note": "Non-commercial only. Using the images in revenue-generating products, or to promote them, is not allowed.",
+    "tier": "strong",
+    "good_for": "Made for posters, logos and layouts with lots of readable text, exact colours and precise placement.",
+    "weak_at": "Non-commercial licence, and heavy because it runs two models at every step.",
+    "hf_repo": "ideogram-ai/ideogram-4-fp8",
+    "tools": [
+      "ComfyUI",
+      "Ideogram reference code (ideogram4)",
+      "Diffusers (nf4 build only)",
+      "stable-diffusion.cpp",
+      "mflux"
+    ],
+    "notes": "It runs two models at every step, so you need both files, and the memory figure counts both: each file is half the listed size (for example 9.3 GB of the 18.6 GB at 8-bit). The 4-bit NF4 version runs only on NVIDIA cards. The SageAttention speed-up does not work with it; the flash-attn add-on made it about 1.5 times faster on an RTX 5090."
+  },
+  {
+    "id": "z-image-turbo",
+    "name": "Z-Image-Turbo",
+    "family": "Z-Image",
+    "lab": "Alibaba Tongyi Lab (Tongyi-MAI)",
+    "released": "2025-11",
+    "kind": "image",
+    "also_edits": false,
+    "params_total_b": 6.2,
+    "components": [
+      {
+        "name": "Qwen3-4B text encoder",
+        "params_b": 4
+      },
+      {
+        "name": "FLUX.1 VAE",
+        "params_b": 0.08
+      }
+    ],
+    "native_precision": "bf16 (repo stores fp32)",
+    "weights_gb_by_precision": {
+      "bf16": 12.3,
+      "int8": 6.2,
+      "nvfp4": 4.5,
+      "q8_gguf": 7.2,
+      "q4_gguf": 3.9
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 8,
+    "text_encoder_gb_by_precision": {
+      "bf16": 8,
+      "fp8": 5.6,
+      "nvfp4": 3.5
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 1.5,
+    "vram_gb": {
+      "comfortable": 16,
+      "minimum_with_offload": 8,
+      "note": "Official: fits in 16 GB. Users run fp8 or GGUF builds on 8 GB cards (RTX 4060 8 GB at about 15-20 s per image) with offloading. The text encoder can also be shrunk (fp8 5.6 GB, fp4 3.5 GB in Comfy-Org/z_image_turbo)."
+    },
+    "typical_output": "1024x1024 image, 8 steps, no CFG",
+    "typical_workload": {
+      "megapixels": 1.05,
+      "steps": 8
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "≈ 2.3 s per 1024x1024 image, 8 steps (bf16)",
+      "seconds": 2.3,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://comfyui-wiki.com/en/news/2025-11-27-alibaba-z-image-turbo-release",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Always 8 steps. The time per step grows with pixel count; one report gives about 4.8 seconds for a 2K image on an RTX Pro 6000. On an M6 Mac mini a 1024 x 1024 image takes about 37 to 40 seconds in mflux or Draw Things, about 15 times as long as on an RTX 4090.",
+    "output_limits": "Creates images from text only; an editing version is announced but not released. Usually 1024 x 1024 pixels, up to about 2K. Realistic photos, and text in English and Chinese.",
+    "license": "Apache-2.0",
+    "license_note": "Permissive: commercial use allowed.",
+    "tier": "efficient",
+    "good_for": "Fast, realistic photos in 8 steps on mid-range graphics cards; the most downloaded of the efficient image models.",
+    "weak_at": "Pictures from the same prompt look much alike, and it cannot edit yet.",
+    "hf_repo": "Tongyi-MAI/Z-Image-Turbo",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "stable-diffusion.cpp",
+      "mflux",
+      "SGLang"
+    ],
+    "notes": "The often-quoted 2.3 seconds per image on an RTX 4090 cannot be traced to an original test; other users report 2 to 4 seconds. A slower 50-step base version, Z-Image, is meant for training your own variants. The editing version had not been published as of 19 November 2026."
+  },
+  {
+    "id": "flux2-klein-4b",
+    "name": "FLUX.2 [klein] 4B",
+    "family": "FLUX.2",
+    "lab": "Black Forest Labs",
+    "released": "2026-01",
+    "kind": "image",
+    "also_edits": true,
+    "params_total_b": 3.9,
+    "components": [
+      {
+        "name": "Qwen3-4B text encoder",
+        "params_b": 4
+      },
+      {
+        "name": "FLUX.2 VAE",
+        "params_b": 0.08
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 7.8,
+      "fp8": 4.1,
+      "nvfp4": 2.5,
+      "q8_gguf": 4.3,
+      "q4_gguf": 2.6
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 8,
+    "text_encoder_gb_by_precision": {
+      "bf16": 8,
+      "nvfp4": 3.9
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 0.6,
+    "vram_gb": {
+      "comfortable": 13,
+      "minimum_with_offload": 6,
+      "note": "BFL: about 13 GB VRAM with bf16 weights. ComfyUI docs measured about 8.4 GB peak on an RTX 5090 for the distilled model. With fp8, nvfp4 or GGUF weights and the 3.9 GB fp4 text encoder it should fit 6-8 GB cards (estimate)."
+    },
+    "typical_output": "1024x1024 image or edit, 4 steps, no CFG",
+    "typical_workload": {
+      "megapixels": 1.05,
+      "steps": 4
+    },
+    "speed_reference": {
+      "gpu": "RTX 5090",
+      "gpu_id_hint": "GeForce RTX 5090",
+      "value": "≈ 1.2 s per image (distilled, 4 steps)",
+      "seconds": 1.2,
+      "precision": "bf16 (assumed)",
+      "offloaded": false,
+      "source": "https://docs.comfy.org/tutorials/flux/flux-2-klein",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "The fast version uses 4 steps; the base version uses 50 steps, each run twice for guidance, and is about 15 times slower (ComfyUI's guide: about 17 seconds against 1.2 seconds on an RTX 5090). The time per step grows with the pixels of the output and of the reference images. On an M6 Mac mini a 1024 x 1024 image takes about 17 seconds in Draw Things.",
+    "output_limits": "One model creates images from text and edits them using several reference images. Usually 1024 x 1024 pixels.",
+    "license": "Apache-2.0",
+    "license_note": "Permissive: commercial use allowed.",
+    "tier": "efficient",
+    "good_for": "Very quick 4-step drafts and simple edits with several images on 8 GB cards, free for any use.",
+    "weak_at": "Renders text less well and follows descriptions less closely than larger models.",
+    "hf_repo": "black-forest-labs/FLUX.2-klein-4B",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "stable-diffusion.cpp",
+      "mflux"
+    ],
+    "notes": "FLUX 3 Image Klein makes better pictures; this one stays in the list because it is smaller and free for any use. The larger 9B version is non-commercial. A slower base version is meant for training your own variants."
+  },
+  {
+    "id": "qwen-image-edit-2511",
+    "name": "Qwen-Image-Edit-2511",
+    "family": "Qwen-Image",
+    "lab": "Alibaba Qwen",
+    "released": "2025-12",
+    "kind": "image-edit",
+    "also_edits": true,
+    "params_total_b": 20.4,
+    "components": [
+      {
+        "name": "Qwen2.5-VL-7B text and image encoder",
+        "params_b": 8.3
+      },
+      {
+        "name": "Qwen-Image VAE",
+        "params_b": 0.13
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 40.9,
+      "fp8": 20.5,
+      "int8": 20.5,
+      "q8_gguf": 22.4,
+      "q4_gguf": 12.8
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 16.6,
+    "text_encoder_gb_by_precision": {
+      "bf16": 16.6,
+      "fp8": 9.4,
+      "nvfp4": 6.1
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 32,
+      "minimum_with_offload": 12,
+      "note": "Estimate. The fp8 model alone is 20.5 GB, so 24 GB cards work only with the text encoder moved out of VRAM after encoding; 32 GB is comfortable. 12-16 GB cards need the Q4 GGUF (12.8 GB) or ComfyUI streaming weights from system RAM (64 GB RAM recommended), and are slower."
+    },
+    "typical_output": "About 1 MP edit (follows the input size), 40 steps with CFG 4, or 4 steps with the Lightning LoRA",
+    "typical_workload": {
+      "megapixels": 1.06,
+      "steps": 4
+    },
+    "speed_reference": {
+      "gpu": "RTX 5090",
+      "gpu_id_hint": "GeForce RTX 5090",
+      "value": "≈ 6 s per 832x1280 edit with the 4-step Lightning LoRA (fp8mixed); ≈ 10 s in bf16",
+      "seconds": 6,
+      "precision": "fp8",
+      "offloaded": false,
+      "source": "https://huggingface.co/ANXS1/Qwen-Image-Edit-2511-NVFP4",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Full quality uses 40 steps, and each step runs the model twice for guidance: roughly 20 times the time of the 4-step Lightning add-on, about 1 to 2 minutes per edit on an RTX 5090 (estimate). Time grows with the size and number of input images.",
+    "output_limits": "Edits from instructions using one or more input images (the official example uses two): keeps people and products consistent, changes text, shows new viewpoints and changes lighting. The output has the same size as the input. Handles Chinese and English text.",
+    "license": "Apache-2.0",
+    "license_note": "Permissive: commercial use allowed.",
+    "tier": "strong",
+    "good_for": "Keeps faces and products consistent across edits and can rewrite text in photos; free for commercial use.",
+    "weak_at": "Large: needs 24 to 32 GB of graphics memory, or runs slowly with part of it in computer memory.",
+    "hf_repo": "Qwen/Qwen-Image-Edit-2511",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "mflux"
+    ],
+    "notes": "The reported speed uses the community's 4-step Lightning add-on, as the official ComfyUI template does. A community 4-bit version is 19.8 GB, nearly as large as the 8-bit one, because it keeps many layers at higher precision. Each input image adds about as much work again as an output image of similar size."
+  },
+  {
+    "id": "sdxl-base-1.0",
+    "name": "Stable Diffusion XL 1.0",
+    "family": "Stable Diffusion XL",
+    "lab": "Stability AI",
+    "released": "2023-07",
+    "kind": "image",
+    "also_edits": false,
+    "params_total_b": 2.6,
+    "components": [
+      {
+        "name": "CLIP ViT-L text encoder",
+        "params_b": 0.12
+      },
+      {
+        "name": "OpenCLIP ViT-bigG text encoder",
+        "params_b": 0.69
+      },
+      {
+        "name": "VAE",
+        "params_b": 0.08
+      }
+    ],
+    "native_precision": "fp16 (fp32 also published)",
+    "weights_gb_by_precision": {
+      "fp16": 5.1,
+      "fp32": 10.3
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 1.4,
+    "text_encoder_gb_by_precision": {
+      "fp16": 1.4
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 1.5,
+    "vram_gb": {
+      "comfortable": 8,
+      "minimum_with_offload": 4,
+      "note": "Estimate. The fp16 UNet plus text encoders is about 7 GB of files and runs comfortably on 8 GB. ComfyUI's low-VRAM mode gets it running on 4 GB cards, more slowly."
+    },
+    "typical_output": "1024x1024 image, 20-30 steps with CFG",
+    "typical_workload": {
+      "megapixels": 1.05,
+      "steps": 20
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "≈ 3.1-3.6 s per 1024x1024 image, 20 steps (RTX 3090 ≈ 6.2 s, RTX 4070 ≈ 7.1 s, RTX 4060 ≈ 15.9 s)",
+      "seconds": 3.3,
+      "precision": "fp16",
+      "offloaded": false,
+      "source": "https://github.com/comfyanonymous/ComfyUI/discussions/2970",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Total time is the number of steps times the time per step, and the time per step grows about in line with pixel count. Each step runs the model twice for guidance; the figures include this. Community Turbo and Lightning versions cut the steps to between 1 and 8.",
+    "output_limits": "Creates images from text, made for 1024 x 1024 pixels. It reads only short descriptions (about 77 tokens).",
+    "license": "CreativeML Open RAIL++-M",
+    "license_note": "Commercial use allowed, with limits on how it is used (no illegal or harmful uses).",
+    "tier": "tiny",
+    "good_for": "Runs on old 4 to 8 GB graphics cards and has the largest library of community add-ons for styles and control.",
+    "weak_at": "Older quality: poor at text in images and at following descriptions.",
+    "hf_repo": "stabilityai/stable-diffusion-xl-base-1.0",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "stable-diffusion.cpp"
+    ],
+    "notes": "Picture quality is well below Z-Image-Turbo and FLUX.2 [klein] 4B; it is listed for old graphics cards and its many add-ons. The speed figures come from a 2024 test with 20 steps. Running it on 4 GB is common practice among users but was not checked here."
+  },
+  {
+    "id": "minimax-h3",
+    "name": "MiniMax H3 (Base, pruned for local use)",
+    "family": "MiniMax H3",
+    "lab": "MiniMax",
+    "released": "2026-08",
+    "kind": "video",
+    "also_edits": false,
+    "params_total_b": 20.1,
+    "components": [
+      {
+        "name": "H3-Encoder text/vision encoder (Qwen3-VL-32B layers used by H3; ComfyUI copy, the official copy is 33.4B)",
+        "params_b": 25.8
+      },
+      {
+        "name": "Video VAE (ViT-based decoder)",
+        "params_b": 2.6
+      },
+      {
+        "name": "Audio VAE (32 kHz stereo)",
+        "params_b": 0.15
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 40.2,
+      "fp8": 21,
+      "int8": 21,
+      "q8_gguf": 21.4,
+      "q4_gguf": 11.4,
+      "q2_gguf": 6.7,
+      "nvfp4": 12.5
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 66.7,
+    "text_encoder_gb_by_precision": {
+      "bf16": 51.5,
+      "int8": 27.1,
+      "q4_gguf": 18.2,
+      "nvfp4": 15.7
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 5,
+    "vram_gb": {
+      "comfortable": 32,
+      "minimum_with_offload": 12,
+      "note": "Sizes are the pruned model (33B with 13B of precomputable modulation weights removed, no quality loss per MiniMax and Comfy). ComfyUI's launch post says it runs on an RTX 3060 (12 GB) with dynamic offloading; the smallest official ComfyUI file set is 42.5 GB, so plan on 64 GB system RAM (estimate). Community tier guide: 16 GB = GGUF Q3/Q4, 24 GB = GGUF Q5 or pruned int8. SGLang's RTX 4090 recipe (int8, layer offload) peaks at about 18 GB. 32 GB avoids most offloading at 768p (estimate). WanGP claims 8 GB with its chunked mode (unverified)."
+    },
+    "typical_output": "1344x768 video with stereo sound, 24 fps, 5 s (124 frames); 20-50 steps, or 4-8 with the turbo LoRA",
+    "typical_workload": {
+      "megapixels": 1.03,
+      "seconds": 4.5,
+      "fps": 24,
+      "steps": 20
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "≈ 3 min (175 s) for a 4.5 s 1344x768 clip at 20 steps with int8 weights and SageAttention; ≈ 7 min (406 s) in bf16. RTX 5090: ≈ 2 min (112 s) for 5 s at 864x480, 20 steps.",
+      "seconds": 175,
+      "precision": "int8",
+      "offloaded": true,
+      "source": "https://docs.sglang.io/cookbook/diffusion/MiniMax/MiniMax-H3",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Total time is the number of steps times the time per step, with one model pass per step. The model splits a clip into blocks of 32 x 32 pixels over 4 frames: a 5-second clip has about 31,000 blocks at 768p and about 12,500 at 480p. Time grows faster than the number of blocks: in SGLang's tests a 10-second clip took 2.1 times and a 15-second clip 3.5 times as long as a 5-second one. The Turbo add-on, with 4 or 8 steps instead of 20 to 50, saves the most time.",
+    "output_limits": "Clips of 4 to 15 seconds at 24 frames per second, with the short side at 768 pixels when run locally; 2K needs MiniMax's online upscaling step, which has not been released. Many shapes from 21:9 to 9:16. 32 kHz stereo sound with dialogue in 11 languages (Arabic, Chinese, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish). It starts from text, a first and/or last frame, or up to 9 reference images, 3 videos and 3 audio clips (including a voice to copy).",
+    "license": "MiniMax H3 Community License",
+    "license_note": "No rights at all in the EU, UK, South Korea or USA, not even for hobby use, unless you buy a paid licence (Comfy is the official reseller). Elsewhere it is free, also commercially, under $20 million revenue a year; commercial products must show \"MiniMax H3\".",
+    "tier": "frontier-class",
+    "good_for": "The most used open video model: film-like clips with matching dialogue, sound effects and music.",
+    "weak_at": "No licence at all in the EU, UK, South Korea or USA.",
+    "hf_repo": "MiniMaxAI/MiniMax-H3",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "SGLang",
+      "vLLM",
+      "WanGP",
+      "stable-diffusion.cpp",
+      "LightX2V"
+    ],
+    "notes": "The text encoder (the part that reads your prompt) is very large: 66.7 GB as released, 51.5 GB in ComfyUI's 16-bit copy, or 27.1 GB (8-bit) and 15.7 GB (4-bit); the WanGP app offers a smaller version of about 5 GB. Results depend on long, structured descriptions, because MiniMax's own prompt-rewriting step is available only online; the official prompt guide or community rewriter models can stand in. On a Mac only stable-diffusion.cpp lists support and there are no speed reports, so expect it to be impractical."
+  },
+  {
+    "id": "ltx-2.5",
+    "name": "LTX-2.5 (22B, distilled and dev)",
+    "family": "LTX-2",
+    "lab": "Lightricks",
+    "released": "2026-08",
+    "kind": "video",
+    "also_edits": false,
+    "params_total_b": 22,
+    "components": [
+      {
+        "name": "Gemma 4 12B text encoder with projection",
+        "params_b": 13.1
+      },
+      {
+        "name": "Video VAE (diffusion decoder; a lighter conv decoder is also shipped)",
+        "params_b": 0.73
+      },
+      {
+        "name": "Audio VAE + vocoder",
+        "params_b": 0.18
+      },
+      {
+        "name": "2x latent spatial upscaler",
+        "params_b": 0.5
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 42,
+      "fp8": 19.1,
+      "int8": 21.5,
+      "q8_gguf": 22.8,
+      "q4_gguf": 13.6,
+      "q2_gguf": 8.5,
+      "nvfp4": 18.7
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 26.3,
+    "text_encoder_gb_by_precision": {
+      "bf16": 26.3,
+      "int8": 15.4
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 12,
+      "note": "Lightricks' own Python pipeline asks for 32 GB+ VRAM (A100/H100 recommended) and 32 GB system RAM (64 GB recommended). In ComfyUI the official int8 files (21.5 GB model + 15.4 GB text encoder, loaded one after the other) run on 24 GB cards. One user reports 5 s 720p clips on an RTX 3060 12 GB with 32 GB RAM in low-VRAM mode. Long or 1080p clips need more memory, mostly for decoding."
+    },
+    "typical_output": "1920x1088 video with sound, 24 fps, 5 s (121 frames): made at 960x544, then upscaled 2x in latent space; distilled model 8 + 4 steps",
+    "typical_workload": {
+      "megapixels": 0.94,
+      "seconds": 10,
+      "fps": 24,
+      "steps": 8
+    },
+    "speed_reference": {
+      "gpu": "RTX 5090",
+      "gpu_id_hint": "GeForce RTX 5090",
+      "value": "≈ 49 s for a 10 s 1280x736 clip (distilled, int8, ComfyUI). RTX 3060 12 GB: ≈ 3 min 14 s for 5 s at 720p (distilled int8, 4 steps).",
+      "seconds": 49,
+      "precision": "int8",
+      "offloaded": false,
+      "source": "https://cosmo-edge.com/ltx-2-5-rtx-5090-benchmark-comfyui/ ; https://huggingface.co/Lightricks/LTX-2.5/discussions/106",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "It packs the video tightly (one block per 32 x 32 pixels over 8 frames), so it has little to compute and is the fastest large model here. Time grows with steps, frames and pixels, and faster than that for long or high-resolution clips. The fast version needs 8 steps plus 4 refining steps; the dev version needs 20 to 40 steps with guidance and is several times slower. At 1080p the new decoder that turns the result into video can take a large share of the time; the other decoder that comes with it is faster.",
+    "output_limits": "The number of frames must be a multiple of 8 plus 1 (for example 121), and each side a multiple of 32 pixels. Lightricks says it reaches 4K and 50 frames per second with its upscalers; locally, clip length is limited by memory (the online service stops at 20 seconds, 10 for most settings). Several shots in one pass, with matching speech, effects and music; it can also make video from sound and sound for a video. Listed languages: English, German, Spanish, French, Japanese, Korean, Chinese, Italian, Portuguese.",
+    "license": "LTX-2.x Community License",
+    "license_note": "Free, also for commercial use, for organisations with under US$10 million revenue a year (counted across the whole group of companies); above that a paid licence is needed. No country is excluded.",
+    "tier": "frontier-class",
+    "good_for": "The fastest large video model here: clips with sound in about a minute on a 32 GB card.",
+    "weak_at": "A paid licence is needed above US$10 million revenue.",
+    "hf_repo": "Lightricks/LTX-2.5",
+    "tools": [
+      "ComfyUI",
+      "Diffusers (install from source)",
+      "ltx-pipelines (Lightricks)",
+      "WanGP",
+      "stable-diffusion.cpp"
+    ],
+    "notes": "Before downloading you must accept terms that also ask for consent to marketing. The text encoder (the part that reads your prompt) is 26.3 GB at 16-bit or 15.4 GB in the official 8-bit version. On a Mac it runs only through stable-diffusion.cpp, with no speed reports so far."
+  },
+  {
+    "id": "wan2.2-a14b",
+    "name": "Wan 2.2 A14B (text-to-video / image-to-video)",
+    "family": "Wan 2.2",
+    "lab": "Alibaba (Wan team)",
+    "released": "2025-07",
+    "kind": "video",
+    "also_edits": false,
+    "params_total_b": 28.6,
+    "components": [
+      {
+        "name": "UMT5-XXL text encoder",
+        "params_b": 5.7
+      },
+      {
+        "name": "Wan 2.1 VAE",
+        "params_b": 0.13
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 57.2,
+      "fp8": 28.6,
+      "q8_gguf": 30.8,
+      "q4_gguf": 19.3,
+      "q2_gguf": 10.6
+    },
+    "weights_resident_fraction": 0.5,
+    "text_encoder_gb": 11.4,
+    "text_encoder_gb_by_precision": {
+      "fp16": 11.4,
+      "fp8": 6.7,
+      "int8": 5.7
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 4,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 8,
+      "note": "Two 14B experts (sizes above are both together); only one is on the GPU at a time while the other waits in system RAM, so VRAM needs follow half the listed size. Alibaba's own scripts peaked at 41 GB (480p) and 60 GB (720p) with offloading. In ComfyUI fp8 (14.3 GB per expert) is the usual choice on 24 GB. Community guides run GGUF Q4 (9.7 GB per expert) plus a 4-step LoRA on 8 GB cards with --lowvram and 32 GB+ system RAM; slow."
+    },
+    "typical_output": "1280x720 or 832x480 video, 16 fps, 5 s (81 frames), no sound; 40 steps with guidance (2 model passes per step)",
+    "typical_workload": {
+      "megapixels": 0.4,
+      "seconds": 5.06,
+      "fps": 16,
+      "steps": 40
+    },
+    "speed_reference": {
+      "gpu": "RTX 5090",
+      "gpu_id_hint": "GeForce RTX 5090",
+      "value": "≈ 12 min per 5 s clip at 480p and ≈ 44 min at 720p with the full 40 steps; ≈ 10-27 s with LightX2V's 4-step NVFP4 sparse version",
+      "seconds": 734,
+      "precision": "bf16",
+      "offloaded": null,
+      "source": "https://huggingface.co/lightx2v/LightWan2.2-A14B",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Each step runs the model twice for guidance. The model splits a clip into blocks of 16 x 16 pixels over 4 frames, so 720p has 2.3 times the blocks of 480p, yet it took 3.2 to 3.6 times as long in tests, because the cost grows faster than the number of blocks. Longer clips grow the same way. Community 4-step add-ons, which skip guidance, cut the time by about 10 to 20 times.",
+    "output_limits": "480p and 720p. Trained on 5-second clips (81 frames at 16 frames per second); longer clips need workflows that extend them. No sound. Text-to-video and image-to-video are separate models; setting a first and last frame works with the image-to-video model.",
+    "license": "Apache 2.0",
+    "license_note": "Free for any use, including commercial, in every country.",
+    "tier": "strong",
+    "good_for": "Good motion and the most community add-ons and workflows, such as setting the first and last frame, under a free licence.",
+    "weak_at": "No sound, and slow at the full 40 steps without speed-up add-ons.",
+    "hf_repo": "Wan-AI/Wan2.2-T2V-A14B",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "WanGP",
+      "LightX2V",
+      "stable-diffusion.cpp",
+      "mlx-video (Apple)",
+      "Draw Things (Apple)"
+    ],
+    "notes": "It is two 14B models that run one after the other, so only half of the download has to be in graphics memory at a time; the other half waits in system memory. The image-to-video version has the same size and is used more. On a Mac it is very slow: one M1 Max user with 64 GB needed 82 minutes for a 2-second clip."
+  },
+  {
+    "id": "wan2.2-ti2v-5b",
+    "name": "Wan 2.2 TI2V-5B",
+    "family": "Wan 2.2",
+    "lab": "Alibaba (Wan team)",
+    "released": "2025-07",
+    "kind": "video",
+    "also_edits": false,
+    "params_total_b": 5,
+    "components": [
+      {
+        "name": "UMT5-XXL text encoder",
+        "params_b": 5.7
+      },
+      {
+        "name": "Wan 2.2 VAE (16x16x4 compression)",
+        "params_b": 0.7
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 10,
+      "fp8": 5.3,
+      "q8_gguf": 5.4,
+      "q4_gguf": 3.4
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 11.4,
+    "text_encoder_gb_by_precision": {
+      "fp16": 11.4,
+      "fp8": 6.7,
+      "int8": 5.7
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 8,
+      "note": "ComfyUI docs: fits 8 GB with native offloading. Alibaba's script peaked at 22.9 GB on an RTX 4090 with offloading and the text encoder on the CPU. The text encoder (11.4 GB, 6.7 GB in fp8) is bigger than the video model; 32 GB system RAM advised (estimate)."
+    },
+    "typical_output": "1280x704 video, 24 fps, 5 s (121 frames), no sound; 50 steps with guidance",
+    "typical_workload": {
+      "megapixels": 0.9,
+      "seconds": 5.04,
+      "fps": 24,
+      "steps": 50
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "≈ 9 min (535 s) per 5 s 720p clip at 50 steps, with offloading",
+      "seconds": 535,
+      "precision": "bf16",
+      "offloaded": true,
+      "source": "https://github.com/Wan-Video/Wan2.2 (Computational Efficiency table)",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "It packs 32 x 32 pixels over 4 frames into one block, so a 5-second 720p clip is about 27,000 blocks (the 14B models need about 76,000 for the same clip). Each step runs the model twice for guidance, and time grows faster than resolution and length. Community fast versions (for example FastWan) cut the 50 steps to between 3 and 8.",
+    "output_limits": "Made for 720p (1280 x 704 or 704 x 1280 pixels) and 5-second clips (121 frames at 24 frames per second). One model does both text-to-video and image-to-video. No sound.",
+    "license": "Apache 2.0",
+    "license_note": "Free for any use, including commercial, in every country.",
+    "tier": "efficient",
+    "good_for": "The lightest official model for a first try at 720p video on an 8-12 GB gaming card.",
+    "weak_at": "Clearly lower quality than the 14B model and the newer models with sound.",
+    "hf_repo": "Wan-AI/Wan2.2-TI2V-5B",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "WanGP",
+      "stable-diffusion.cpp",
+      "mlx-video (Apple)"
+    ],
+    "notes": "The speed and memory figures are Alibaba's own, measured on one RTX 4090 with 50 steps and part of the model in system memory. ComfyUI's copy of the video decoder is half the size of the official one (1.4 GB against 2.8 GB)."
+  },
+  {
+    "id": "hunyuanvideo-1.5",
+    "name": "HunyuanVideo 1.5",
+    "family": "HunyuanVideo",
+    "lab": "Tencent Hunyuan",
+    "released": "2025-11",
+    "kind": "video",
+    "also_edits": false,
+    "params_total_b": 8.3,
+    "components": [
+      {
+        "name": "Qwen2.5-VL-7B text encoder",
+        "params_b": 8.3
+      },
+      {
+        "name": "byT5-small glyph encoder (for text shown in the video)",
+        "params_b": 0.22
+      },
+      {
+        "name": "VAE (16x16x4 compression)",
+        "params_b": 1.26
+      },
+      {
+        "name": "SigLIP vision encoder (image-to-video only)",
+        "params_b": 0.43
+      }
+    ],
+    "native_precision": "bf16 (official files stored as fp32)",
+    "weights_gb_by_precision": {
+      "fp32": 33.3,
+      "bf16": 16.7,
+      "fp8": 8.3,
+      "q8_gguf": 9,
+      "q4_gguf": 5.1
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 16.6,
+    "text_encoder_gb_by_precision": {
+      "bf16": 16.6,
+      "fp8": 9.4
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 24,
+      "minimum_with_offload": 14,
+      "note": "Tencent: 14 GB minimum with model offloading (overlapped offloading uses a lot of system RAM; 32 GB+ advised, estimate). ComfyUI's guide targets 24 GB cards. WanGP (quoted on Tencent's card) claims as low as 6 GB."
+    },
+    "typical_output": "848x480 or 1280x720 video, 24 fps, 5 s (121 frames), no sound; 50 steps (8-12 with the step-distilled 480p image-to-video model); optional 1080p upscaler",
+    "typical_workload": {
+      "megapixels": 0.41,
+      "seconds": 5.04,
+      "fps": 24,
+      "steps": 8
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "≈ 75 s per 5 s 480p clip with the step-distilled image-to-video model (8-12 steps)",
+      "seconds": 75,
+      "precision": null,
+      "offloaded": null,
+      "source": "https://huggingface.co/tencent/HunyuanVideo-1.5",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "One block per 16 x 16 pixels over 4 frames, so a 5-second clip has about 112,000 blocks at 720p against 49,000 at 480p, and 720p takes much more than twice as long. Tencent offers versions without the double guidance pass (about 2 times faster, still 50 steps), a fast 480p version (8 to 12 steps, 75% less time on an RTX 4090) and a speed-up for 720p (1.5 to 2 times, only on data-centre H-series cards).",
+    "output_limits": "480p and 720p, 121 frames by default (5 to 10 seconds according to ComfyUI's guide); 1080p through a separate upscaling model. Can render readable text in the scene. Takes Chinese and English descriptions. No sound.",
+    "license": "Tencent Hunyuan Community License",
+    "license_note": "Not licensed in the EU, UK or South Korea. Elsewhere it is free, also commercially; services with more than 100 million monthly users need a separate licence.",
+    "tier": "efficient",
+    "good_for": "Renders readable text inside the scene, and a fast version turns a picture into 480p video in few steps.",
+    "weak_at": "Not licensed in the EU, UK or South Korea, and makes no sound.",
+    "hf_repo": "tencent/HunyuanVideo-1.5",
+    "tools": [
+      "ComfyUI",
+      "Diffusers",
+      "WanGP",
+      "LightX2V",
+      "stable-diffusion.cpp"
+    ],
+    "notes": "There are separate models for 480p and 720p and for text-to-video and image-to-video, plus fast versions and upscalers to 720p and 1080p. The speed figure is Tencent's own; no independent test on a home graphics card was found. On a Mac only stable-diffusion.cpp might run it, and that is untested."
+  },
+  {
+    "id": "kandinsky-6-lite",
+    "name": "Kandinsky 6.0 Video Lite",
+    "family": "Kandinsky 6.0 Video",
+    "lab": "Kandinsky Lab (Sber)",
+    "released": "2026-10",
+    "kind": "video",
+    "also_edits": false,
+    "params_total_b": 3.2,
+    "components": [
+      {
+        "name": "Qwen2.5-VL-7B text encoder",
+        "params_b": 8.3
+      },
+      {
+        "name": "CLIP text encoder",
+        "params_b": 0.12
+      },
+      {
+        "name": "Video VAE (HunyuanVideo VAE)",
+        "params_b": 0.25
+      },
+      {
+        "name": "Audio VAE + vocoder",
+        "params_b": 0.55
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 6.4,
+      "int8": 3.3
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 16.6,
+    "text_encoder_gb_by_precision": {
+      "bf16": 16.6
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 2.5,
+    "vram_gb": {
+      "comfortable": 16,
+      "minimum_with_offload": 8,
+      "note": "Kandinsky Lab ran Lite fully on a 16 GB RTX 5060 Ti with the text encoder in 4-bit (NF4); on a 24 GB RTX 4090 with the text encoder in bf16 they used module offload. 8 GB is an estimate: the video model is only 6.4 GB (3.3 GB int8), but the 16.6 GB text encoder must then be quantized or offloaded."
+    },
+    "typical_output": "864x480 video with 44 kHz sound, 24 fps, 5 s (121 frames); 50 steps, or 10 with the distilled checkpoint; optional upscale to 1920x1080",
+    "typical_workload": {
+      "megapixels": 0.41,
+      "seconds": 5.04,
+      "fps": 24,
+      "steps": 10
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "≈ 68 s per 5 s clip with sound (distilled, 480p); ≈ 4.5 min with the 50-step model; ≈ 3 min (distilled) on a 16 GB RTX 5060 Ti",
+      "seconds": 68,
+      "precision": "bf16",
+      "offloaded": true,
+      "source": "https://github.com/kandinskylab/kandinsky-6",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "Clips are always 5 seconds, so time mainly depends on the number of steps: the fast version needs 10 instead of 50 (about 4 times faster in the lab's tests). Each clip has about 50,000 blocks (16 x 16 pixels over 4 frames each), so a clip still takes a fair amount of computing even though the model is small. Upscaling to Full HD with the separate model roughly triples the total time (68 to 209 seconds on an RTX 4090).",
+    "output_limits": "5-second clips only, at 864 x 480 pixels, or Full HD with a separate upscaler. Matching 44 kHz sound, including lip-synced speech. Text-to-video and image-to-video. The lab does not say which prompt languages work.",
+    "license": "MIT",
+    "license_note": "Free for any use, including commercial, in every country.",
+    "tier": "tiny",
+    "good_for": "The smallest model here that makes video with matching sound, including lip-synced speech, under the MIT licence.",
+    "weak_at": "Only 5-second clips, and little testing by users so far.",
+    "hf_repo": "kandinskylab/Kandinsky-6.0-Lite-5s-Diffusers",
+    "tools": [
+      "Diffusers",
+      "ComfyUI (official custom node)",
+      "SGLang",
+      "vLLM-Omni",
+      "FastVideo"
+    ],
+    "notes": "The fast 10-step version is the more downloaded one (6.4 GB at 16-bit); a community 8-bit version is 3.3 GB. The text encoder (the part that reads your prompt) adds 16.6 GB at 16-bit. ComfyUI needs a custom add-on from the lab, and on a Mac there is only an unofficial conversion with no reports."
+  },
+  {
+    "id": "kandinsky-6-pro",
+    "name": "Kandinsky 6.0 Video Pro",
+    "family": "Kandinsky 6.0 Video",
+    "lab": "Kandinsky Lab (Sber)",
+    "released": "2026-10",
+    "kind": "video",
+    "also_edits": false,
+    "params_total_b": 30.1,
+    "components": [
+      {
+        "name": "Qwen2.5-VL-7B text encoder",
+        "params_b": 8.3
+      },
+      {
+        "name": "CLIP text encoder",
+        "params_b": 0.12
+      },
+      {
+        "name": "Video VAE (HunyuanVideo VAE)",
+        "params_b": 0.25
+      },
+      {
+        "name": "Audio VAE + vocoder",
+        "params_b": 0.55
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 60.3,
+      "int8": 30.5,
+      "q4_gguf": 23.7,
+      "nvfp4": 20.1
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 16.6,
+    "text_encoder_gb_by_precision": {
+      "bf16": 16.6
+    },
+    "can_offload_text_encoder": true,
+    "activation_gb_at_typical": 5,
+    "vram_gb": {
+      "comfortable": 80,
+      "minimum_with_offload": 16,
+      "note": "Even an 80 GB A100 used module offload in Kandinsky Lab's tests; a 32 GB RTX 5090, a 24 GB RTX 4090 and a 16 GB RTX 5060 Ti ran it with block offload (text encoder in NF4 on the 16 GB card). Offloading the 60 GB bf16 model needs roughly 96-128 GB system RAM (estimate); community int8 (30.5 GB) or NVFP4 (20.1 GB) files lower that."
+    },
+    "typical_output": "864x480 video with 44 kHz sound, 24 fps, 5 s (121 frames); 50 steps, or 10 with the distilled checkpoint; optional upscale to 1920x1080",
+    "typical_workload": {
+      "megapixels": 0.41,
+      "seconds": 5.04,
+      "fps": 24,
+      "steps": 10
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "≈ 4 min (235 s) per 5 s 480p clip with sound (distilled, block offload); ≈ 16 min with the 50-step model; ≈ 88 s distilled on an H100",
+      "seconds": 235,
+      "precision": "bf16",
+      "offloaded": true,
+      "source": "https://github.com/kandinskylab/kandinsky-6",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "Same clip format as Lite: always 5 seconds, about 50,000 blocks. Time follows the number of steps: the fast version's 10 steps are about 4 times quicker than 50. On cards that must keep part of the model in system memory, moving it back and forth adds a lot: an RTX 4090 is 2.7 times slower than a data-centre H100 here, and the 16 GB RTX 5060 Ti about 3 times slower than the 4090.",
+    "output_limits": "5-second clips only, at 864 x 480 pixels, or Full HD with a separate upscaler. Matching 44 kHz sound, including lip-synced speech. Text-to-video and image-to-video. The lab does not say which prompt languages work.",
+    "license": "MIT",
+    "license_note": "Free for any use, including commercial, in every country.",
+    "tier": "strong",
+    "good_for": "Higher-quality video with sound under the MIT licence; the lab says it beat LTX-2.5 in its own comparisons.",
+    "weak_at": "Very heavy (60 GB at 16-bit), and few people use it so far.",
+    "hf_repo": "kandinskylab/Kandinsky-6.0-Pro-5s-Diffusers",
+    "tools": [
+      "Diffusers",
+      "ComfyUI (official custom node)",
+      "SGLang",
+      "vLLM-Omni",
+      "FastVideo"
+    ],
+    "notes": "The fast 10-step version can be downloaded freely (60.3 GB at 16-bit); for the base version you must first accept the terms, which is automatic. Community versions are smaller: 30.5 GB at 8-bit, 23.7 GB as compact files and 20.1 GB in NVIDIA's 4-bit format, which needs an RTX 50-series or other Blackwell-generation card."
+  },
+  {
+    "id": "piper-voices",
+    "name": "Piper (voice collection)",
+    "family": "Piper",
+    "lab": "Open Home Foundation (originally Rhasspy)",
+    "released": "2023-06",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.016,
+    "components": [
+      {
+        "name": "espeak-ng phonemizer (rule-based, built into the engine)",
+        "params_b": 0
+      }
+    ],
+    "native_precision": "fp32",
+    "weights_gb_by_precision": {
+      "fp32": 0.06
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 0.2,
+    "vram_gb": {
+      "comfortable": 0,
+      "minimum_with_offload": 0,
+      "note": "No GPU needed. Runs on any CPU, including a Raspberry Pi. One medium-quality voice is a 0.06 GB ONNX file (high-quality voices 0.11 GB); RAM use is a few hundred MB (estimate)."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 22.05 kHz mono",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "Raspberry Pi 4 Model B CPU, 4 threads (sherpa-onnx runtime, en_US-libritts_r-medium voice)",
+      "gpu_id_hint": "Raspberry Pi 4",
+      "value": "RTF 0.36 (≈ 2.8x real time) → about 3.6 s per 10 s of speech; with 1 thread RTF 0.79",
+      "seconds": 3.6,
+      "precision": "fp32",
+      "offloaded": false,
+      "source": "https://k2-fsa.github.io/sherpa/onnx/tts/pretrained_models/vits.html",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Time grows in a straight line with text length. On a Raspberry Pi 4, using 4 processor threads instead of 1 more than halves the time. A desktop processor is many times faster than a Pi (no measured figure found). Voices marked x_low or low are faster, and high voices slower.",
+    "output_limits": "One language per voice. About 50 languages, including German (voices thorsten, thorsten_emotional, kerstin, karlsson, eva_k, mls, pavoque, ramona) and Swedish (nst, alma, lisa). It cannot copy a voice; a new voice must be trained. No practical length limit, because text is read sentence by sentence.",
+    "license": "Engine: GPL-3.0-or-later (OHF-Voice/piper1-gpl). Voices: per-voice data licence in each MODEL_CARD (e.g. sv_SE-nst-medium CC0, sv_SE-alma-medium CC BY 4.0, de_DE-thorsten-medium CC0)",
+    "license_note": "Commercial use depends on the voice: Piper's commercial-use page lists the voices whose whole training history allows it (download again any voices retrained in late 2026). The GPL licence of the program only matters if you ship the program itself.",
+    "tier": "tiny",
+    "good_for": "Reads text aloud in German, Swedish and about 50 other languages, offline on any processor, even a Raspberry Pi.",
+    "weak_at": "Sounds robotic, and cannot copy a voice.",
+    "hf_repo": "rhasspy/piper-voices",
+    "tools": [
+      "piper-tts (piper1-gpl, ONNX Runtime)",
+      "sherpa-onnx",
+      "Home Assistant (Wyoming Piper add-on)"
+    ],
+    "notes": "Each medium-quality voice is a file of about 63 MB. The speed figures were measured on a Raspberry Pi 4; older sources give different numbers."
+  },
+  {
+    "id": "kokoro-82m",
+    "name": "Kokoro 82M v1.0",
+    "family": "Kokoro",
+    "lab": "hexgrad (community lab)",
+    "released": "2025-01",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.082,
+    "components": [
+      {
+        "name": "misaki G2P (rule-based, espeak-ng fallback)",
+        "params_b": 0
+      },
+      {
+        "name": "54 voice style vectors (0.03 GB)",
+        "params_b": null
+      }
+    ],
+    "native_precision": "fp32",
+    "weights_gb_by_precision": {
+      "fp32": 0.33,
+      "fp16": 0.16,
+      "q8": 0.09
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 0.5,
+    "vram_gb": {
+      "comfortable": 2,
+      "minimum_with_offload": 0,
+      "note": "Runs well on CPU (no GPU needed). On a GPU it needs only about 1-2 GB (estimate; no official figure)."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 24 kHz mono",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "CPU: Hugging Face Jobs cpu-upgrade (8 vCPU), streaming, batch 1",
+      "gpu_id_hint": "CPU 8 vCPU (cloud server)",
+      "value": "≈ 5.5x real time (RTF ≈ 0.18) → about 2 s per 10 s of speech",
+      "seconds": 1.8,
+      "precision": "fp32",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard (Streaming tab, CPU, 16 Nov 2026)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Time grows in a straight line with text length. On a graphics card it makes speech 35 to 100 times faster than real time (RTX 4060 Ti), or 39 times on a data-centre A100. A Raspberry Pi 4 with 4 threads is slower than real time: 10 seconds of speech take about 28 seconds.",
+    "output_limits": "8 languages: American and British English, Spanish, French, Italian, Brazilian Portuguese, Hindi, Japanese and Mandarin (no German or Swedish). 54 ready-made voices; it cannot copy a voice. Long text is split into parts automatically.",
+    "license": "Apache 2.0",
+    "license_note": "Free for commercial use.",
+    "tier": "tiny",
+    "good_for": "Natural-sounding English from 54 ready-made voices, and fast on a laptop processor.",
+    "weak_at": "No German or Swedish, and cannot copy a voice.",
+    "hf_repo": "hexgrad/Kokoro-82M",
+    "tools": [
+      "kokoro (PyTorch)",
+      "Kokoro-FastAPI",
+      "ONNX Runtime (onnx-community/Kokoro-82M-v1.0-ONNX, Transformers.js)",
+      "sherpa-onnx",
+      "MLX-Audio",
+      "llama.cpp (ggml-org/Kokoro-82M-GGUF)",
+      "audio.cpp"
+    ],
+    "notes": "The most downloaded text-to-speech model on Hugging Face in November 2026. The smaller 16-bit and 8-bit versions come from the community (0.16 GB and 0.09 GB), and the graphics memory figure is an estimate. A separate Chinese version, Kokoro v1.1-zh, also exists."
+  },
+  {
+    "id": "phonon-31m-en",
+    "name": "Phonon 31M (English)",
+    "family": "Phonon",
+    "lab": "Gradium",
+    "released": "2026-10",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.031,
+    "components": [
+      {
+        "name": "Mimi audio codec decoder (gradium/phonon-mimi, stored fp32, bundled)",
+        "params_b": 0.0103
+      }
+    ],
+    "native_precision": "bf16 (some fp32 tensors)",
+    "weights_gb_by_precision": {
+      "bf16": 0.1,
+      "q8_gguf": 0.06,
+      "q4_gguf": 0.06
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0.04,
+    "text_encoder_gb_by_precision": {
+      "fp32": 0.04
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 0.2,
+    "vram_gb": {
+      "comfortable": 0,
+      "minimum_with_offload": 0,
+      "note": "Made for CPU, phones and browsers; no GPU needed. The q8 file is 64.5 MB."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 24 kHz mono",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "CPU: Hugging Face Jobs cpu-upgrade (8 vCPU), streaming, batch 1",
+      "gpu_id_hint": "CPU 8 vCPU (cloud server)",
+      "value": "≈ 16x real time (RTF ≈ 0.06) → under 1 s per 10 s of speech; first audio after ≈ 20 ms",
+      "seconds": 0.6,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard (Streaming tab, CPU, 16 Nov 2026)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Makes the audio in 80-millisecond pieces, so time grows in a straight line with audio length and the first sound arrives almost at once.",
+    "output_limits": "English only, with about 100 ready-made voices. Copying a voice or designing a new one is only offered in Gradium's online studio. Ollama takes up to 4,096 characters per request and splits longer text.",
+    "license": "Apache 2.0 (weights, tokenizer and voices); runtime MIT or Apache 2.0",
+    "license_note": "Free for commercial use. The related Phonon 40M models (including German and a 5-language model) are non-commercial only (CC BY-NC 4.0).",
+    "tier": "tiny",
+    "good_for": "The fastest small English model here, rated above many larger ones; it runs on a processor and in Ollama.",
+    "weak_at": "English only, and it cannot copy a voice on your own computer.",
+    "hf_repo": "gradium/phonon-31m-en",
+    "tools": [
+      "ptts (Gradium runtime: CLI, Python, browser WASM, Android)",
+      "Ollama (ollama pull phonon)",
+      "Transformers",
+      "MLX-Audio",
+      "audio.cpp (gradium/phonon-31m-en-audiocpp)"
+    ],
+    "notes": "Needs a recent version of Ollama (0.40.9 or newer); it was the only speech model there when Ollama added speech in October 2026. The download also holds a 10 million parameter audio decoder next to the 31 million parameter model. It is one month old, so there has been little independent testing."
+  },
+  {
+    "id": "pocket-tts",
+    "name": "Pocket TTS",
+    "family": "Pocket TTS",
+    "lab": "Kyutai",
+    "released": "2026-01",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.1,
+    "components": [],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 0.22,
+      "q8_gguf": 0.13
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 0.5,
+    "vram_gb": {
+      "comfortable": 0,
+      "minimum_with_offload": 0,
+      "note": "Designed for CPU (uses 2 cores). A GPU gives little speedup; on a GPU, audio.cpp measured about 2 GB peak VRAM."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 24 kHz mono",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "CPU: Hugging Face Jobs cpu-upgrade (8 vCPU), streaming, batch 1",
+      "gpu_id_hint": "CPU 8 vCPU (cloud server)",
+      "value": "≈ 3.2x real time (RTF ≈ 0.31) → about 3 s per 10 s of speech; first audio after ≈ 130 ms",
+      "seconds": 3.1,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard (Streaming tab, CPU, 16 Nov 2026)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Makes audio piece by piece, so time grows in a straight line with audio length. Kyutai reports about 6 times real time on a MacBook Air M4 processor and about 0.2 seconds until the first sound. Turning a recording into a voice is slow, so save the voice once and reuse it.",
+    "output_limits": "English, French, German, Portuguese, Italian, Spanish and Dutch, one model per language; the languages other than English also have slower, higher-quality versions. No Swedish. It can copy a voice from a short recording. Even smaller English models (18M, 7M and 2M parameters) also exist.",
+    "license": "CC BY 4.0 (gated on HF: accept terms first); preset voices have their own licences (kyutai/tts-voices)",
+    "license_note": "Commercial use is allowed if you credit the source. Do not copy anyone's voice without their consent (usage policy).",
+    "tier": "tiny",
+    "good_for": "Copies a voice from a short clip on an ordinary laptop processor, in English and six other European languages.",
+    "weak_at": "No Swedish, and its German is less accurate than that of larger models.",
+    "hf_repo": "kyutai/pocket-tts",
+    "tools": [
+      "pocket-tts (Python, CPU)",
+      "Pocket TTS Rust binaries",
+      "sherpa-onnx",
+      "llama.cpp",
+      "audio.cpp",
+      "MLX-Audio (mlx-community/pocket-tts)",
+      "ComfyUI (ComfyUI-Pocket-TTS custom node)"
+    ],
+    "notes": "Each language model is 0.22 GB, and the higher-quality versions 0.67 GB. In one independent test its German was understandable but made more mistakes than ZONOS3-Mini or Supertonic 3. The lab keeps adding models, so choose the language when you start it."
+  },
+  {
+    "id": "supertonic-3",
+    "name": "Supertonic 3",
+    "family": "Supertonic",
+    "lab": "Supertone",
+    "released": "2026-04",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.099,
+    "components": [],
+    "native_precision": "fp32",
+    "weights_gb_by_precision": {
+      "fp32": 0.4
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 0.3,
+    "vram_gb": {
+      "comfortable": 0,
+      "minimum_with_offload": 0,
+      "note": "CPU-only is fine (ONNX Runtime). Whole model is 0.4 GB."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters)",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "CPU: Hugging Face Jobs cpu-upgrade (8 vCPU), audio.cpp, streaming mode",
+      "gpu_id_hint": "CPU 8 vCPU (cloud server)",
+      "value": "≈ 3x real time (RTF ≈ 0.33) → about 3.3 s per 10 s of speech; batched on an H200 GPU ≈ 57-61x real time",
+      "seconds": 3.3,
+      "precision": "fp32",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard (Streaming tab, CPU; Leaderboard tab, H200)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "It makes a whole sentence at once, so the first sound comes late (1.5 to 1.9 seconds in tests) while the total time is short. Time grows roughly in a straight line with text length.",
+    "output_limits": "31 languages: English, Korean, Japanese, Arabic, Bulgarian, Czech, Danish, German, Greek, Spanish, Estonian, Finnish, French, Hindi, Croatian, Hungarian, Indonesian, Italian, Lithuanian, Latvian, Dutch, Polish, Portuguese, Romanian, Russian, Slovak, Slovenian, Swedish, Turkish, Ukrainian and Vietnamese. Ready-made voices only; the open release cannot copy a voice. Simple sound tags such as <laugh>, <breath> and <sigh>.",
+    "license": "BigScience OpenRAIL-M (model); MIT (sample code)",
+    "license_note": "Commercial use allowed, with limits on how it is used: no harmful uses, and you must pass these limits on to your users.",
+    "tier": "tiny",
+    "good_for": "A tiny reader for 31 languages, including German and Swedish, that runs on a processor or in a web browser.",
+    "weak_at": "Ready-made voices only, and the project stopped in July 2026.",
+    "hf_repo": "Supertone/supertonic-3",
+    "tools": [
+      "ONNX Runtime (Python, Node.js, browser WebGPU/WASM, C++, C#, Java, Go, Swift, Rust, Flutter examples)",
+      "Transformers.js",
+      "audio.cpp"
+    ],
+    "notes": "Supertone ended open development on 23 July 2026; the same files now sit in the supertone-oss-archive account on Hugging Face. Its paid service for custom voices closed on 31 August 2026. It was still downloaded about 84,000 times in the last 30 days."
+  },
+  {
+    "id": "chatterbox-multilingual-v3",
+    "name": "Chatterbox Multilingual V3",
+    "family": "Chatterbox",
+    "lab": "Resemble AI",
+    "released": "2026-06",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.54,
+    "components": [
+      {
+        "name": "S3Gen v3 speech-token-to-audio decoder",
+        "params_b": 0.26
+      },
+      {
+        "name": "voice encoder (ve)",
+        "params_b": null
+      },
+      {
+        "name": "Perth watermarker",
+        "params_b": null
+      }
+    ],
+    "native_precision": "fp32",
+    "weights_gb_by_precision": {
+      "fp32": 2.14,
+      "bf16": 1.05,
+      "q8_gguf": 0.56
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 1.06,
+    "text_encoder_gb_by_precision": {
+      "fp32": 1.06
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 1,
+    "vram_gb": {
+      "comfortable": 6,
+      "minimum_with_offload": 4,
+      "note": "NVIDIA's ACE model card lists about 3.5 GB for Multilingual TTS alone; audio.cpp measured 4.3-5.0 GB peak. Also runs on CPU or Apple MPS, slowly (no measured number)."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 24 kHz",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "H200, reference PyTorch code, batch 1",
+      "gpu_id_hint": "NVIDIA H200",
+      "value": "≈ 1.5x real time (RTF ≈ 0.68) → about 7 s per 10 s of speech",
+      "seconds": 6.8,
+      "precision": "fp32",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard (Leaderboard tab, German, ChatterboxMultilingualTTS)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "It makes audio piece by piece, so time grows in a straight line with audio length. The software matters a lot: audio.cpp's compact version reports 6 to 9 times real time on an unnamed NVIDIA card.",
+    "output_limits": "23 languages: Arabic, Danish, German, Greek, English, Spanish, Finnish, French, Hebrew, Hindi, Italian, Japanese, Korean, Malay, Dutch, Norwegian, Polish, Portuguese, Russian, Swedish, Swahili, Turkish and Chinese. It can copy a voice from a clip of about 10 seconds, with a setting for how strongly emotions come through. Every output carries an inaudible watermark.",
+    "license": "MIT",
+    "license_note": "Free for commercial use.",
+    "tier": "efficient",
+    "good_for": "Copies a voice from a 10-second clip in 23 languages and lets you set how emotional it sounds.",
+    "weak_at": "Had the least accurate German in one independent test, though it is unclear which version was tested.",
+    "hf_repo": "ResembleAI/chatterbox",
+    "tools": [
+      "chatterbox-tts (PyTorch; CUDA, CPU, MPS)",
+      "llama.cpp (ggml-org/chatterbox-GGUF)",
+      "audio.cpp",
+      "MLX-Audio (mlx-community/chatterbox-multilingual-v3)",
+      "ComfyUI (TTS-Audio-Suite custom node)"
+    ],
+    "notes": "Version 3 is in the main Chatterbox download, but the default is still version 2, so select version 3 when you load it. The compact files need a separate decoder file of 0.60 GB. In llama.cpp the llama-tts tool runs it fully, while the server does not yet support its guidance setting."
+  },
+  {
+    "id": "zonos3-mini",
+    "name": "ZONOS3-Mini",
+    "family": "ZONOS",
+    "lab": "Zyphra",
+    "released": "2026-11",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.8,
+    "components": [
+      {
+        "name": "ZAC codec decoder (keep2_plain, 0.45 GB GGUF)",
+        "params_b": null
+      },
+      {
+        "name": "speaker encoder (0.05 GB)",
+        "params_b": null
+      },
+      {
+        "name": "optional raw-reference encoders for reference-mode cloning (5.6 GB GGUF)",
+        "params_b": null
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 1.61,
+      "q8_gguf": 0.85
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0.45,
+    "text_encoder_gb_by_precision": {
+      "gguf": 0.45
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 0.7,
+    "vram_gb": {
+      "comfortable": 4,
+      "minimum_with_offload": 0,
+      "note": "With the GGUF runtimes it runs on CPU in about 2 GB of RAM (audio.cpp on Apple M3). Zyphra's own CUDA server loads about 9 GB of PyTorch weights, so plan 12 GB+ for that path (estimate)."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 44.1 kHz",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "Apple M3 CPU, 8 threads (audio.cpp)",
+      "gpu_id_hint": "Apple M3 (CPU)",
+      "value": "RTF 0.30 (≈ 3.3x real time) → about 3 s per 10 s of speech; RTF 0.11 on the M3 GPU (Metal)",
+      "seconds": 3,
+      "precision": null,
+      "offloaded": false,
+      "source": "https://github.com/0xShug0/audio.cpp/blob/main/docs/models/zonos3.md",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "It is a mixture-of-experts model: all 800 million parameters sit in memory, but only about 100 million work at each step, so it runs like a small model. Time grows in a straight line with audio length. Copying a new voice from a 10-second clip adds a one-time step; on an Apple M3 processor, 10 seconds of speech took about 8.4 seconds including that step, and saved voices skip it. In an independent test it ran 3.1 times faster than real time on an 8-core cloud processor, and 14 times on a data-centre A100 with the first sound after 12 milliseconds.",
+    "output_limits": "43 languages, including German, Swedish, Danish, Norwegian and Finnish, and 27 ready-made voices. It can copy a voice from a clip of up to 60 seconds without a transcript, or from a saved voice profile. You can design a voice by age, accent and voice texture, and set speed and loudness. Up to 10 minutes of audio at a time, according to the lab.",
+    "license": "Apache 2.0",
+    "license_note": "Free for commercial use.",
+    "tier": "efficient",
+    "good_for": "Copies voices in 43 languages, even on a laptop processor, and had the most accurate commercially usable German in one test.",
+    "weak_at": "Brand new (November 2026), so few users have tested it.",
+    "hf_repo": "Zyphra/ZONOS3-Mini",
+    "tools": [
+      "Zyphra runtimes (CUDA server, MLX server, C++/ggml CPU/CUDA/Metal/Vulkan, in-browser WebGPU)",
+      "SGLang-Omni",
+      "llama.cpp (ggml-org/ZONOS3-Mini-GGUF)",
+      "audio.cpp",
+      "MLX-Audio"
+    ],
+    "notes": "The compact files need a separate 1.14 GB file with the audio decoder and voices; Zyphra's own package is 1.16 GB in total. It turns numbers and dates into words correctly in only 9 languages; for the others, including Swedish, write numbers out in words."
+  },
+  {
+    "id": "omnivoice",
+    "name": "OmniVoice",
+    "family": "OmniVoice",
+    "lab": "k2-fsa (Next-gen Kaldi)",
+    "released": "2026-03",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 0.61,
+    "components": [
+      {
+        "name": "audio tokenizer",
+        "params_b": 0.2
+      }
+    ],
+    "native_precision": "fp32 (run in fp16)",
+    "weights_gb_by_precision": {
+      "fp32": 2.45,
+      "bf16": 1.64,
+      "q8_gguf": 1.35
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0.8,
+    "text_encoder_gb_by_precision": {
+      "fp32": 0.8
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 1.5,
+    "vram_gb": {
+      "comfortable": 4,
+      "minimum_with_offload": 4,
+      "note": "Tested by the authors on a 4 GB Intel Arc A310; audio.cpp measured about 3.1-3.3 GB peak VRAM."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 24 kHz",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "A100, audio.cpp, streaming, batch 1",
+      "gpu_id_hint": "NVIDIA A100",
+      "value": "≈ 12x real time (RTF ≈ 0.09) → about 1 s per 10 s of speech",
+      "seconds": 0.9,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard (Streaming tab, A100)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "It works on a whole sentence at once in a fixed number of steps (16 to 32), so time depends on the steps and the length. Processing several requests together helps a lot: on a data-centre H100 the lab measured 0.9 seconds per 10 seconds of speech for one request and 0.12 seconds with 8 at once. The first sound comes only after the whole part is done (about 0.4 seconds on an A100). On an RTX 4090 with audio.cpp, one 9-word sentence in a copied voice took 0.15 seconds.",
+    "output_limits": "More than 600 languages (646 in one independent count), including German and Swedish. It can copy a voice from a short clip plus its transcript, and design a voice by gender, age, pitch, accent or whispering. Tags such as [laughter] add sounds, and you can correct pronunciation. Long text is split into parts.",
+    "license": "Weights: CC BY-NC (because of Emilia training data); code: Apache 2.0",
+    "license_note": "Non-commercial use only for the model itself (the code is under Apache 2.0).",
+    "tier": "efficient",
+    "good_for": "Copies voices in more than 600 languages, including rare ones, on a graphics card with 4 GB.",
+    "weak_at": "Non-commercial licence.",
+    "hf_repo": "k2-fsa/OmniVoice",
+    "tools": [
+      "omnivoice (PyTorch; CUDA, Apple MPS, Intel Arc)",
+      "audio.cpp",
+      "MLX-Audio (mlx-community/OmniVoice-bf16)",
+      "ComfyUI (TTS-Audio-Suite custom node)"
+    ],
+    "notes": "The second most downloaded text-to-speech model on Hugging Face. The compact files run in audio.cpp; llama.cpp does not list it as supported. The model page does not say which version of the non-commercial licence applies."
+  },
+  {
+    "id": "qwen3-tts-1.7b",
+    "name": "Qwen3-TTS 1.7B (Base / CustomVoice / VoiceDesign)",
+    "family": "Qwen3-TTS",
+    "lab": "Alibaba Qwen",
+    "released": "2026-01",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 1.93,
+    "components": [
+      {
+        "name": "Qwen3-TTS-Tokenizer-12Hz speech codec",
+        "params_b": 0.17
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 3.86,
+      "q8_gguf": 1.85,
+      "q4_gguf": 1.04
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0.68,
+    "text_encoder_gb_by_precision": {
+      "fp32": 0.68
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 3.4,
+    "vram_gb": {
+      "comfortable": 8,
+      "minimum_with_offload": 6,
+      "note": "audio.cpp measured 7.9 GB peak with 16-bit weights and 6.4 GB with Q8. The 0.6B variant (1.81 GB bf16) should fit 4-6 GB (estimate). Qwen recommends FlashAttention 2 to cut memory."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 24 kHz",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "Stock qwen-tts code: 0.82x real time (RTF ≈ 1.2, slower than real time) → about 12 s per 10 s of speech. With faster-qwen3-tts (CUDA graphs): 4.2x real time (RTF ≈ 0.24) → about 2.4 s, first audio after 174 ms",
+      "seconds": 12.2,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://pypi.org/project/faster-qwen3-tts/ (v0.5.4 benchmark table)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "It makes about 12 pieces of audio per second of speech, one after another, so time grows in a straight line with length. On an RTX 4060 one test measured 0.23 times real time with the lab's code and 1.83 times with an optimised setup, so the software matters more than the graphics card. An independent test measured 6.1 times real time on a data-centre A100 with audio.cpp and 2.7 times with faster-qwen3-tts.",
+    "output_limits": "10 languages: Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish and Italian (no Swedish). Three versions: Base copies a voice from a 3-second clip, CustomVoice has 9 ready-made voices that follow instructions on speaking style, and VoiceDesign makes a new voice from a written description. Audio can play while it is still being made.",
+    "license": "Apache 2.0",
+    "license_note": "Free for commercial use.",
+    "tier": "efficient",
+    "good_for": "Designs a new voice from a written description, or copies one from 3 seconds of audio, in 10 major languages.",
+    "weak_at": "No Swedish, and slower than real time with the lab's own code.",
+    "hf_repo": "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+    "tools": [
+      "qwen-tts (PyTorch)",
+      "faster-qwen3-tts",
+      "vLLM-Omni",
+      "llama.cpp (ggml-org/Qwen3-TTS-12Hz-1.7B-Base-GGUF)",
+      "audio.cpp",
+      "MLX-Audio",
+      "ComfyUI (TTS-Audio-Suite custom node)"
+    ],
+    "notes": "Qwen publishes five versions: Base, CustomVoice and VoiceDesign at 1.7B, and Base and CustomVoice at 0.6B. The compact files need a separate extra file of 0.45 to 0.67 GB. No newer Qwen speech model had been released as of November 2026."
+  },
+  {
+    "id": "voxcpm2",
+    "name": "VoxCPM2",
+    "family": "VoxCPM",
+    "lab": "OpenBMB",
+    "released": "2026-04",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 2.29,
+    "components": [
+      {
+        "name": "AudioVAE V2 (16 kHz in, 48 kHz out; 0.38 GB file)",
+        "params_b": null
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 4.58,
+      "q8_gguf": 2.96
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0.38,
+    "text_encoder_gb_by_precision": {
+      "bf16": 0.38
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 8,
+      "minimum_with_offload": 6,
+      "note": "Vendor model card: about 8 GB VRAM in bf16. The 6 GB minimum with Q8 GGUF is an estimate."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 48 kHz",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "RTX 4090",
+      "gpu_id_hint": "GeForce RTX 4090",
+      "value": "RTF ≈ 0.30 (≈ 3.3x real time) with standard PyTorch → about 3 s per 10 s of speech; ≈ 0.13 with Nano-vLLM",
+      "seconds": 3,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://huggingface.co/openbmb/VoxCPM2",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "It makes 6.25 pieces of audio per second of speech, each refined in a few steps (10 by default), so time grows in a straight line with length and with the number of steps. An independent test on a data-centre A100 measured only about real-time speed with the lab's code and 4.6 times real time with audio.cpp.",
+    "output_limits": "30 languages: Arabic, Burmese, Chinese, Danish, Dutch, English, Finnish, French, German, Greek, Hebrew, Hindi, Indonesian, Italian, Japanese, Khmer, Korean, Lao, Malay, Norwegian, Polish, Portuguese, Russian, Spanish, Swahili, Swedish, Tagalog, Thai, Turkish and Vietnamese, plus 9 Chinese dialects; you do not need to name the language. It can copy a voice from a short clip (better with a transcript) and design a voice from a description. 48 kHz audio, up to 8,192 tokens per request.",
+    "license": "Apache 2.0",
+    "license_note": "Free for commercial use.",
+    "tier": "strong",
+    "good_for": "Makes 48 kHz audio and can copy or design voices in 30 languages, including German and Swedish.",
+    "weak_at": "An independent test ran about 3 times slower than the lab's figure.",
+    "hf_repo": "openbmb/VoxCPM2",
+    "tools": [
+      "voxcpm (PyTorch; CUDA, MPS, CPU)",
+      "Nano-vLLM-VoxCPM",
+      "vLLM-Omni",
+      "llama.cpp",
+      "llama.cpp-omni (fork, DennisHuang648/VoxCPM2-GGUF)",
+      "audio.cpp",
+      "MLX-Audio (mlx-community/VoxCPM2-8bit)"
+    ],
+    "notes": "The 8-bit compact version is a single 2.96 GB file for audio.cpp. The lab's speed on an RTX 4090 and an independent test disagree by about three times, so treat the reported speed as the best case."
+  },
+  {
+    "id": "fish-s2-pro",
+    "name": "Fish Audio S2 Pro",
+    "family": "Fish Audio S2",
+    "lab": "Fish Audio",
+    "released": "2026-03",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 4.56,
+    "components": [
+      {
+        "name": "RVQ audio codec (codec.pth, 1.87 GB)",
+        "params_b": null
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 9.13,
+      "q8_gguf": 4.29
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 1.87,
+    "text_encoder_gb_by_precision": {
+      "fp32": 1.87
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 1,
+    "vram_gb": {
+      "comfortable": 16,
+      "minimum_with_offload": 8,
+      "note": "audio.cpp measured 12.1 GB peak with 16-bit weights and 7.7 GB with Q8; its Q6_K/Q4_K recipe targets 6-8 GB cards."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 44.1 kHz",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "A100, reference fish-speech code, streaming, batch 1",
+      "gpu_id_hint": "NVIDIA A100",
+      "value": "≈ 2.8x real time (RTF ≈ 0.36) → about 3.6 s per 10 s of speech",
+      "seconds": 3.6,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_tts_leaderboard (Streaming tab, A100)",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Two models work in turn (a 4B model and a 0.4B model, about 21 pieces per second of audio), so time grows in a straight line with length. The lab measured about 2 seconds per 10 seconds of speech on one data-centre H200. The audio.cpp project reports 2.5 times (16-bit) to 3.4 times (8-bit) real time on an unnamed NVIDIA card.",
+    "output_limits": "More than 80 languages: best in Japanese, English and Chinese, then Korean, Spanish, Portuguese, Arabic, Russian, French and German; Swedish is among the other supported languages. It can copy a voice. Free-form tags in the text such as [whisper], [laughing] or [pitch up]. Dialogue with several speakers and turns.",
+    "license": "Fish Audio Research License",
+    "license_note": "Non-commercial and research use only; any commercial use needs a separate licence from Fish Audio.",
+    "tier": "strong",
+    "good_for": "Very expressive speech that you steer with tags such as [whisper] or [laughing], including dialogue between several speakers.",
+    "weak_at": "Non-commercial licence.",
+    "hf_repo": "fishaudio/s2-pro",
+    "tools": [
+      "fish-speech (PyTorch)",
+      "SGLang-Omni",
+      "vLLM-Omni",
+      "llama.cpp (ggml-org/s2-pro-GGUF)",
+      "audio.cpp",
+      "MLX-Audio (mlx-community/fish-audio-s2-pro-8bit)",
+      "ComfyUI (TTS-Audio-Suite custom node)"
+    ],
+    "notes": "The 8-bit compact files for llama.cpp need a separate 2.05 GB file with the second model and the audio decoder; audio.cpp's single 8-bit package is 6.32 GB. The same lab's newer Drama 3 is rated much higher and allows some commercial use."
+  },
+  {
+    "id": "fish-drama-3",
+    "name": "Fish Audio Drama 3",
+    "family": "Fish Audio Drama",
+    "lab": "Fish Audio",
+    "released": "2026-10",
+    "kind": "tts",
+    "also_edits": false,
+    "params_total_b": 35.9,
+    "components": [
+      {
+        "name": "codebook tower (inside the main checkpoint)",
+        "params_b": null
+      },
+      {
+        "name": "Fish DAC audio codec (codec.pth, 1.87 GB)",
+        "params_b": null
+      }
+    ],
+    "native_precision": "fp8 (MoE experts) + bf16 (rest)",
+    "weights_gb_by_precision": {
+      "fp8": 39.6,
+      "int4": 22.1,
+      "bf16": 69.4,
+      "q8_gguf": 36.9,
+      "q4_gguf": 20.6
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 1.87,
+    "text_encoder_gb_by_precision": {
+      "fp32": 1.87
+    },
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 3,
+    "vram_gb": {
+      "comfortable": 48,
+      "minimum_with_offload": 24,
+      "note": "SGLang-Omni docs: the FP8 checkpoint's weights take 37.0 GB of GPU memory (does not fit one 32 GB card); the official int4 checkpoint takes 20.8 GB (needs an Ampere-or-newer GPU). audio.cpp can keep some experts on the CPU to fit 16-24 GB, but this was only tested on a 96 GB card. Apple: MLX 4-bit peaks at 28.7 GB (48 GB+ unified memory recommended), 8-bit at 47.1 GB (64 GB+)."
+    },
+    "typical_output": "10 s of speech (about 25 words / 150 characters), 44.1 kHz",
+    "typical_workload": {
+      "audio_seconds": 10
+    },
+    "speed_reference": {
+      "gpu": "H200, SGLang-Omni, 1 stream",
+      "gpu_id_hint": "NVIDIA H200",
+      "value": "RTF 0.131 (≈ 7.6x real time) → about 1.3 s per 10 s of speech; first audio after 89 ms",
+      "seconds": 1.3,
+      "precision": "fp8",
+      "offloaded": false,
+      "source": "https://huggingface.co/fishaudio/drama-3",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "It is a mixture-of-experts model: memory has to hold all 35 billion parameters, while speed depends on the roughly 3 billion used for each piece. It makes about 21.5 pieces per second of audio, so time grows in a straight line with length. Running several requests at once raises the total output but slows each one (the lab's H200 figures: 1.3 seconds per 10 seconds of speech for one request, 3.7 seconds each for 16). No speed has been measured on a home graphics card.",
+    "output_limits": "83 languages, the same as S2 Pro, including German and Swedish. It can copy a voice, though not yet in the llama.cpp version. Up to 16 speakers in one text, marked with speaker tags. You can steer it with plain instructions or tags, and redo part of a take by continuing from it. Long text is split automatically (in llama.cpp, 4,096 tokens per run).",
+    "license": "Fish Audio Community License v1.0",
+    "license_note": "Free for personal and research use. Commercial use is allowed only while your organisation's yearly revenue is under US$500,000, and you may not run an online text-to-speech or voice-copying service without a separate licence. You must credit it with \"Built with Fish Audio\", and its output may not be used to train other speech models.",
+    "tier": "frontier-class",
+    "good_for": "The highest-rated open text-to-speech model in November 2026, for audiobooks and scenes with up to 16 speakers.",
+    "weak_at": "Needs 24 to 48 GB of memory, and commercial use is allowed only below US$500,000 revenue.",
+    "hf_repo": "fishaudio/drama-3",
+    "tools": [
+      "SGLang-Omni",
+      "vLLM-Omni",
+      "llama.cpp (ggml-org/drama-3-GGUF, no voice cloning yet)",
+      "audio.cpp (community port, experimental)",
+      "MLX-Audio (mlx-community/fish-audio-drama-3-4bit)"
+    ],
+    "notes": "Fish Audio publishes an official 8-bit version and a 4-bit version; the community compact files for llama.cpp need an extra 2.94 GB file. The licence label on Hugging Face still names the older research licence, but the licence file itself is the Community License v1.0 from 13 October 2026."
+  },
+  {
+    "id": "moonshine-streaming-small",
+    "name": "Moonshine Streaming Small (Moonshine v2)",
+    "family": "Moonshine v2 (Streaming)",
+    "lab": "Moonshine AI (Useful Sensors)",
+    "released": "2026-01",
+    "kind": "stt",
+    "also_edits": false,
+    "params_total_b": 0.14,
+    "components": [],
+    "native_precision": "fp32",
+    "weights_gb_by_precision": {
+      "fp32": 0.56,
+      "fp16": 0.28,
+      "q8_gguf": 0.2
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 0.2,
+    "vram_gb": {
+      "comfortable": 0,
+      "minimum_with_offload": 0,
+      "note": "0 = no GPU needed. Built for CPUs, phones and Raspberry Pi; the paper targets devices with under 1 GB of memory. Weights are 0.2-0.56 GB depending on precision."
+    },
+    "typical_output": "60 s of live English speech turned into text while you speak",
+    "typical_workload": {
+      "audio_seconds": 60
+    },
+    "speed_reference": {
+      "gpu": "Apple M3 MacBook, CPU only (ONNX Runtime)",
+      "gpu_id_hint": "Apple M3 (CPU)",
+      "value": "about 5.6x real time while streaming (compute = 18% of audio length); text arrives about 0.15 s after you stop speaking",
+      "seconds": 10.7,
+      "precision": "fp32",
+      "offloaded": false,
+      "source": "https://arxiv.org/html/2602.12241",
+      "confidence": "vendor-claim"
+    },
+    "speed_scaling": "Work grows in a straight line with audio length. It listens in short pieces while you talk, so the wait after you stop speaking stays short; longer sentences still take longer to write out.",
+    "output_limits": "English. Separate streaming models exist for German, Spanish and Japanese (Small size) and for German, Spanish, Arabic, Mandarin, Vietnamese, Tagalog and Japanese (Tiny size); none for Swedish. The longest audio per pass is not stated, because the Moonshine Voice library cuts the audio into pieces around detected speech. Writes text while you speak, without timing for each word and without translation.",
+    "license": "MIT",
+    "license_note": "Free for commercial use. All Moonshine streaming models are under the MIT licence; only the older non-streaming models for other languages are non-commercial.",
+    "tier": "tiny",
+    "good_for": "Live captions and voice commands in English with very little delay, on processors, phones and a Raspberry Pi.",
+    "weak_at": "English only (there is a separate German model), and no timing for each word.",
+    "hf_repo": "moonshine-ai/moonshine-streaming-small",
+    "tools": [
+      "Moonshine Voice (ONNX Runtime: Python, JS/WASM, iOS, Android, macOS, Linux, Windows, Raspberry Pi)",
+      "Transformers",
+      "transcribe.cpp"
+    ],
+    "notes": "There is a smaller Tiny version (0.18 GB) and a Medium version (1.06 GB) with the best English accuracy; the German model is moonshine-streaming-small-de (0.45 GB). Community tests measured 49 times real time on an Apple M4 Max processor and 9.3 times on an AMD Ryzen 7 4750U laptop processor."
+  },
+  {
+    "id": "parakeet-tdt-0.6b-v3",
+    "name": "Parakeet TDT 0.6B v3",
+    "family": "Parakeet",
+    "lab": "NVIDIA",
+    "released": "2025-08",
+    "kind": "stt",
+    "also_edits": false,
+    "params_total_b": 0.63,
+    "components": [],
+    "native_precision": "fp32",
+    "weights_gb_by_precision": {
+      "fp32": 2.51,
+      "fp16": 1.26,
+      "q8_gguf": 0.71,
+      "q4_gguf": 0.49,
+      "int8_onnx": 0.67
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 1,
+    "vram_gb": {
+      "comfortable": 4,
+      "minimum_with_offload": 0,
+      "note": "0 = runs on CPU without a GPU (about 35x real time on a Ryzen 7 9800X3D, community). Model card: at least 2 GB RAM to load, and longer audio needs more memory. 4 GB comfortable is an estimate."
+    },
+    "typical_output": "60 s of recorded speech transcribed to punctuated text with timestamps",
+    "typical_workload": {
+      "audio_seconds": 60
+    },
+    "speed_reference": {
+      "gpu": "RTX 5070 Ti (onnx-asr, CUDA, one file at a time)",
+      "gpu_id_hint": "GeForce RTX 5070 Ti",
+      "value": "≈ 91x real time → about 0.7 s per minute of audio. Ryzen 7 9800X3D CPU: 35x. Open ASR Leaderboard (H200, batched): RTFx 6,322",
+      "seconds": 0.66,
+      "precision": null,
+      "offloaded": false,
+      "source": "https://istupakov.github.io/onnx-asr/benchmarks/",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Time grows roughly in a straight line with audio length. It can skip ahead several audio frames at a time, so it is fast even on a processor. Memory grows faster than the file length because it looks at the whole file at once, so switch to the local mode for files over about 24 minutes.",
+    "output_limits": "25 European languages, detected automatically: Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, German, Greek, Hungarian, Italian, Latvian, Lithuanian, Maltese, Polish, Portuguese, Romanian, Slovak, Slovenian, Spanish, Swedish, Russian and Ukrainian. Up to 24 minutes per pass in the normal mode (on an 80 GB A100), or up to 3 hours in a local mode that looks at nearby audio only. Timings for each word, sentence part and character, with punctuation and capitals. Live transcription only in pieces, through a script from NVIDIA's NeMo toolkit.",
+    "license": "CC-BY-4.0",
+    "license_note": "Commercial use is allowed if you credit NVIDIA and link to the licence.",
+    "tier": "efficient",
+    "good_for": "Very fast transcription with timings in 25 European languages, even on a processor.",
+    "weak_at": "Weak on Swedish (about 15 in every 100 words wrong).",
+    "hf_repo": "nvidia/parakeet-tdt-0.6b-v3",
+    "tools": [
+      "NeMo",
+      "Transformers",
+      "NeMo-Speech.cpp (GGUF)",
+      "sherpa-onnx",
+      "onnx-asr",
+      "MLX (parakeet-mlx)",
+      "transcribe.cpp"
+    ],
+    "notes": "Speed depends a lot on the software: community tests measured 35 times real time on a Ryzen 7 9800X3D processor, 91 times on an RTX 5070 Ti and 215 times on an Apple M4 Max graphics chip. NVIDIA publishes its own full and 8-bit compact files, and community versions exist for other tools, including Apple's MLX software. Running it in vLLM needs a third-party plugin."
+  },
+  {
+    "id": "whisper-large-v3-turbo",
+    "name": "Whisper large-v3-turbo",
+    "family": "Whisper",
+    "lab": "OpenAI",
+    "released": "2024-10",
+    "kind": "stt",
+    "also_edits": false,
+    "params_total_b": 0.81,
+    "components": [],
+    "native_precision": "fp16",
+    "weights_gb_by_precision": {
+      "fp16": 1.62,
+      "q8_gguf": 0.87,
+      "q5_gguf": 0.57,
+      "q4_gguf": 0.54,
+      "int8_onnx": 1.03
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 1,
+    "vram_gb": {
+      "comfortable": 6,
+      "minimum_with_offload": 0,
+      "note": "6 GB is OpenAI's figure for the reference PyTorch code. whisper.cpp and faster-whisper (int8) need much less: about 2 GB is an estimate. 0 = also runs on CPU only (about 4-6x real time on a fast desktop or Apple M4 Max CPU, community)."
+    },
+    "typical_output": "60 s of recorded speech transcribed to punctuated text",
+    "typical_workload": {
+      "audio_seconds": 60
+    },
+    "speed_reference": {
+      "gpu": "RTX 5070 Ti (onnx-asr, CUDA, fp16, one file at a time)",
+      "gpu_id_hint": "GeForce RTX 5070 Ti",
+      "value": "≈ 76x real time → about 0.8 s per minute of audio. Ryzen 7 9800X3D CPU: 3.9x (int8: 5.4x). Open ASR Leaderboard (H200, batched): RTFx 809",
+      "seconds": 0.79,
+      "precision": "fp16",
+      "offloaded": false,
+      "source": "https://istupakov.github.io/onnx-asr/benchmarks/",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "Audio is processed in 30-second pieces, so memory stays the same for any file length and time grows in a straight line with length. The text is written word by word, so audio with a lot of speech takes longer. Processing several pieces at once (batched mode in faster-whisper, or whisper.cpp) speeds things up.",
+    "output_limits": "99 languages, detected automatically; quality varies a lot by language. It works on 30 seconds at a time, and longer files are handled piece by piece with no practical length limit. Timings per sentence part are built in; timings per word need an extra alignment step, which whisper.cpp, faster-whisper, Transformers and openai-whisper offer. No true live transcription (only tools that feed it in pieces), and unlike large-v3 it was not trained to translate.",
+    "license": "MIT",
+    "license_note": "Free for commercial use.",
+    "tier": "efficient",
+    "good_for": "A safe choice for almost any language, supported by the most apps and tools, and good at Swedish.",
+    "weak_at": "Less accurate than 2026 models on English and German.",
+    "hf_repo": "openai/whisper-large-v3-turbo",
+    "tools": [
+      "openai-whisper",
+      "Transformers",
+      "whisper.cpp",
+      "faster-whisper (CTranslate2)",
+      "MLX (mlx-whisper)",
+      "ONNX (Transformers.js, sherpa-onnx)",
+      "vLLM",
+      "transcribe.cpp"
+    ],
+    "notes": "Ready-made versions exist for whisper.cpp, faster-whisper and Apple's MLX software, from 0.46 GB (4-bit, MLX) to 1.62 GB (16-bit). Community tests measured 76 times real time on an RTX 5070 Ti, 51 times on an Apple M4 Max graphics chip and about 4 to 6 times on a desktop or laptop processor. OpenAI had released no newer open speech model as of November 2026, and this is still the most downloaded speech-to-text model on Hugging Face."
+  },
+  {
+    "id": "qwen3-asr-1.7b",
+    "name": "Qwen3-ASR 1.7B",
+    "family": "Qwen3-ASR",
+    "lab": "Alibaba Qwen",
+    "released": "2026-01",
+    "kind": "stt",
+    "also_edits": false,
+    "params_total_b": 2.35,
+    "components": [
+      {
+        "name": "Qwen3-ForcedAligner-0.6B (optional, only needed for timestamps)",
+        "params_b": 0.92
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 4.7,
+      "q8_gguf": 2.19,
+      "q4_gguf": 1.32,
+      "mlx_8bit": 2.46
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 1,
+    "vram_gb": {
+      "comfortable": 8,
+      "minimum_with_offload": 0,
+      "note": "Estimate: no official VRAM figure. BF16 weights are 4.7 GB plus working memory for up to 20 minutes of audio; Q8_0/Q4 GGUF (2.2/1.3 GB) fits a 4 GB GPU. 0 = runs on CPU only too (2.3x real time on a Ryzen 7 4750U laptop, 8.8x on an M4 Max CPU, community). Timestamps need the separate aligner (+1.8 GB in BF16)."
+    },
+    "typical_output": "60 s of recorded speech transcribed to punctuated text",
+    "typical_workload": {
+      "audio_seconds": 60
+    },
+    "speed_reference": {
+      "gpu": "Apple M4 Max GPU (transcribe.cpp, Metal, Q8_0, 35 s clip)",
+      "gpu_id_hint": "Apple M4 Max",
+      "value": "≈ 37x real time → about 1.6 s per minute of audio. Ryzen 7 4750U laptop: 3.7x (Vulkan), 2.3x (CPU). Open ASR Leaderboard (H200, batched): RTFx 836",
+      "seconds": 1.6,
+      "precision": "q8_gguf",
+      "offloaded": false,
+      "source": "https://github.com/handy-computer/transcribe.cpp/blob/main/docs/models/qwen3-asr-1.7b.md",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "An audio part turns each second of speech into 12.5 tokens, then a 1.7B language model writes the text one token at a time. Time is the encoding, which grows in a straight line with audio length, plus one language-model step per piece of text, so it behaves like a small chat model: graphics card speed and processing several files at once matter a lot.",
+    "output_limits": "30 languages plus 22 Chinese dialects, detected automatically (German and Swedish included, Swedish weak). Up to 20 minutes per pass. Timings need the separate Qwen3-ForcedAligner-0.6B model, which covers 11 languages (not Swedish) and up to 5 minutes per pass. Live transcription works through vLLM, but then without timings and without processing several files at once. Also handles singing and songs with background music.",
+    "license": "Apache-2.0",
+    "license_note": "Free for commercial use.",
+    "tier": "strong",
+    "good_for": "Accurate transcription of English, German and Chinese, even songs, on an 8 GB graphics card or a fast laptop.",
+    "weak_at": "Weak on Swedish (about 20 in every 100 words wrong).",
+    "hf_repo": "Qwen/Qwen3-ASR-1.7B",
+    "tools": [
+      "qwen-asr (official package)",
+      "Transformers",
+      "vLLM",
+      "llama.cpp",
+      "MLX (mlx-audio)",
+      "transcribe.cpp"
+    ],
+    "notes": "Community tests measured 37 times real time on an Apple M4 Max graphics chip, 8.8 times on its processor and 2.3 to 3.7 times on an AMD Ryzen 7 4750U laptop. In llama.cpp the compact files need a separate audio file (0.36 GB); transcribe.cpp uses single files, and there is an 8-bit version for Apple's MLX software."
+  },
+  {
+    "id": "nemotron-3.5-transcribe-30b-a4b",
+    "name": "Nemotron 3.5 Transcribe 30B-A4B",
+    "family": "Nemotron 3.5",
+    "lab": "NVIDIA",
+    "released": "2026-10",
+    "kind": "stt",
+    "also_edits": false,
+    "params_total_b": 33.7,
+    "components": [
+      {
+        "name": "DFlash2 draft model (optional, faster decoding; no word timestamps when used)",
+        "params_b": 0.57
+      }
+    ],
+    "native_precision": "bf16",
+    "weights_gb_by_precision": {
+      "bf16": 67.5,
+      "fp8": 34.7,
+      "nvfp4": 21.6,
+      "q8_gguf": 36.7,
+      "q4_gguf": 21.4,
+      "q2_gguf": 15.2
+    },
+    "weights_resident_fraction": 1,
+    "text_encoder_gb": 0,
+    "text_encoder_gb_by_precision": {},
+    "can_offload_text_encoder": false,
+    "activation_gb_at_typical": 1,
+    "vram_gb": {
+      "comfortable": 32,
+      "minimum_with_offload": 8,
+      "note": "Official NeMo-Speech.cpp guide: defaults fit a 32 GB GPU (files up to 1 hour). 24 GB works with the IQ4_NL GGUF, files up to 29 minutes. 8-16 GB GPUs work by keeping the expert weights in system RAM: one file at a time, up to 29 minutes, slower; needs roughly 24-32 GB free system RAM (estimate). vLLM: BF16 on one 80 GB H100, FP8 on a 48 GB L40S, NVFP4 on a 32 GB RTX 5090 (Blackwell only)."
+    },
+    "typical_output": "60 s of recorded speech transcribed to punctuated text, optionally with speaker labels and word timestamps",
+    "typical_workload": {
+      "audio_seconds": 60
+    },
+    "speed_reference": {
+      "gpu": "NVIDIA H200, batched, BF16 (Open ASR Leaderboard)",
+      "gpu_id_hint": "NVIDIA H200",
+      "value": "RTFx 473 (batched server throughput, 1 hour of audio in about 7.6 s of compute); FP8 build RTFx 303. No single-file consumer-GPU measurement found; expect much slower.",
+      "seconds": 0.13,
+      "precision": "bf16",
+      "offloaded": false,
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "confidence": "measured-by-others"
+    },
+    "speed_scaling": "It is a mixture-of-experts model: about 4.3 billion parameters work for each token, so each step costs about as much as a 4B model, but all 34 billion must sit in memory. One hour of audio comes to about 65,000 tokens (12.5 per second of audio plus up to 6 per second of text), and its design keeps the extra memory small (about 0.5 GB for an hour). Moving parts of the model to system memory saves graphics memory but slows transcription a lot.",
+    "output_limits": "40 languages: NVIDIA rates German as leading and Swedish as ready for production; Norwegian is listed but not supported for transcription. Up to 1 hour per pass. Timings for each word and labels for each speaker (in vLLM and NeMo-Speech.cpp). Works on finished recordings only, not live. It also translates speech to and from English, accepts lists of special words, and answers questions about the audio.",
+    "license": "OpenMDW-1.1",
+    "license_note": "Permissive: commercial use is allowed in any country and for any purpose. Include the licence and notices when you pass the model files on; the licence ends for anyone who sues over patents in the model.",
+    "tier": "frontier-class",
+    "good_for": "The most accurate open model for long recordings with several speakers, with speaker labels, in 40 languages including Swedish.",
+    "weak_at": "Needs a graphics card with 24 to 32 GB to run at good speed.",
+    "hf_repo": "nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+    "tools": [
+      "vLLM (0.32 with NeMo Speech plugin)",
+      "Transformers (from source)",
+      "NeMo",
+      "NeMo-Speech.cpp (GGUF: CUDA, CPU, Vulkan, Metal)",
+      "SGLang-Omni"
+    ],
+    "notes": "NVIDIA publishes its own 16-bit, 8-bit (34.7 GB) and 4-bit (21.6 GB) versions, and the community compact files need an extra 1.67 GB file for the audio part. NVIDIA's fastest published speeds come from its NIM service software, and NVIDIA says the open release is about half as fast. No speed test on a home graphics card was found."
+  }
+]

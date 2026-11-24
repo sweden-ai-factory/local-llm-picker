@@ -1,0 +1,1001 @@
+<div class="lrn" id="lrn">
+
+<!-- ================= 0 · START ================= -->
+<section class="lrn-ch lrn-top" id="lrn-top" data-ch="top" aria-labelledby="lrn-top-h">
+  <div class="lrn-hero tone-ink" data-pattern="dashes" data-pattern-fade="edge">
+    <div class="wrap">
+      <span class="overline lrn-kicker">Learn · A guide for beginners</span>
+      <h1 class="display" id="lrn-top-h">Run AI on your own hardware</h1>
+      <p class="lead">A plain guide to running downloadable AI models on a laptop, a workstation or a company server. It covers what decides whether a model fits, how fast it runs, which programs to use, what it costs and what a business should check before relying on one.</p>
+    </div>
+  </div>
+  <div class="wrap lrn-start">
+    <h2 class="lrn-h2s">Where to start</h2>
+    <p class="lrn-p">Pick the description that fits you best. You get the chapters to read first and the tool to open afterwards.</p>
+    <div class="lrn-paths" role="group" aria-label="What describes you best">
+      <button type="button" class="lrn-path" data-path="try" aria-pressed="false" aria-controls="lrn-path-out">
+        <span class="label">Path 1</span><span class="lrn-path-t">Try a model on my computer</span><span class="fine">One person, a laptop or desktop.</span>
+      </button>
+      <button type="button" class="lrn-path" data-path="team" aria-pressed="false" aria-controls="lrn-path-out">
+        <span class="label">Path 2</span><span class="lrn-path-t">Set it up for a small team</span><span class="fine">A few to a few dozen people sharing one machine.</span>
+      </button>
+      <button type="button" class="lrn-path" data-path="ent" aria-pressed="false" aria-controls="lrn-path-out">
+        <span class="label">Path 3</span><span class="lrn-path-t">Plan a company-wide service</span><span class="fine">Hundreds of users, servers with graphics cards, compliance.</span>
+      </button>
+    </div>
+    <div class="lrn-path-out" id="lrn-path-out" aria-live="polite" hidden></div>
+    <p class="fine lrn-or">Or read the chapters in order, starting with <a href="#/learn/basics">chapter 1</a>.</p>
+  </div>
+</section>
+
+<!-- ================= CHAPTER INDEX (sticky) ================= -->
+<nav class="lrn-index" id="lrn-index" aria-label="Chapters">
+  <div class="lrn-index-in" id="lrn-index-in">
+    <a href="#/learn/top" data-ch="top">Start</a>
+    <a href="#/learn/basics" data-ch="basics"><span class="n">01</span>Basics</a>
+    <a href="#/learn/memory" data-ch="memory"><span class="n">02</span>Memory</a>
+    <a href="#/learn/quantisation" data-ch="quantisation"><span class="n">03</span>Quantisation</a>
+    <a href="#/learn/speed" data-ch="speed"><span class="n">04</span>Speed</a>
+    <a href="#/learn/context" data-ch="context"><span class="n">05</span>Context</a>
+    <a href="#/learn/moe" data-ch="moe"><span class="n">06</span>Experts</a>
+    <a href="#/learn/tools" data-ch="tools"><span class="n">07</span>Tools</a>
+    <a href="#/learn/formats" data-ch="formats"><span class="n">08</span>Files</a>
+    <a href="#/learn/media" data-ch="media"><span class="n">09</span>Media</a>
+    <a href="#/learn/team" data-ch="team"><span class="n">10</span>Teams</a>
+    <a href="#/learn/costs" data-ch="costs"><span class="n">11</span>Costs</a>
+    <a href="#/learn/licences" data-ch="licences"><span class="n">12</span>Licences</a>
+    <a href="#/learn/glossary" data-ch="glossary"><span class="n">13</span>Glossary</a>
+  </div>
+</nav>
+
+<!-- ================= 1 · BASICS ================= -->
+<section class="lrn-ch" id="lrn-basics" data-ch="basics" aria-labelledby="lrn-basics-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 01</span>
+      <h2 class="headline" id="lrn-basics-h">Running a model locally</h2>
+      <p class="lead lrn-sum">Three parts work together on a computer you control: the model file, the engine that runs it and the interface you type into.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>Running a model locally means the AI works on hardware you control, such as your own laptop or a server in your office. Your questions and documents are processed on that machine and are not sent to an online service.</p>
+    </div>
+
+    <div class="lrn-scrolly compact" data-scene="flow">
+      <div class="lrn-steps">
+        <div class="lrn-step" data-focus="ui">
+          <h3>1. You type a question</h3>
+          <p>The interface is where you type and read. It can be the chat window of a desktop app, a chat page in your browser, or a program of your own.</p>
+        </div>
+        <div class="lrn-step" data-focus="send">
+          <h3>2. The question goes to the engine</h3>
+          <p>The interface passes your text to the engine, the program that does the actual work. Running a model like this is called inference. The engine first splits the text into tokens, which are pieces of words.</p>
+        </div>
+        <div class="lrn-step" data-focus="model">
+          <h3>3. The engine works through the model file</h3>
+          <p>The model file holds billions of numbers learned during training, called weights or parameters. The engine loads the file into memory once. For every token it writes, it runs a calculation through those weights.</p>
+        </div>
+        <div class="lrn-step" data-focus="answer">
+          <h3>4. The answer arrives token by token</h3>
+          <p>Each new token goes back to the interface as soon as it is ready, which is why answers appear word by word. The engine adds the token to the text and repeats until the answer is complete.</p>
+        </div>
+      </div>
+      <figure class="lrn-stage lrn-demo">
+        <figcaption class="lrn-read">Pills moving right are your question. Pills moving back are the answer, one token at a time.</figcaption>
+        <div class="lrn-flow" id="lrn-flow" role="img" aria-label="Diagram: the interface sends a question to the engine, the engine reads the model file and sends the answer back one token at a time."></div>
+        <p class="fine lrn-flow-cap" id="lrn-flow-cap" aria-live="polite"></p>
+      </figure>
+    </div>
+
+    <div class="lrn-three">
+      <div><h3>Model file</h3><p class="small">A file of a few gigabytes up to several hundred, downloaded once, usually from Hugging Face. Qwen3.5 9B, for example, is about 6 GB in its common 4-bit version.</p></div>
+      <div><h3>Engine</h3><p class="small">The program that loads the model and calculates the answer. llama.cpp, MLX and vLLM are engines.</p></div>
+      <div><h3>Interface</h3><p class="small">Where you type and read: a desktop app, a web page such as Open WebUI, or your own program connected through an API (an agreed way for programs to send each other requests).</p></div>
+    </div>
+    <p class="lrn-p">Desktop apps such as Ollama, LM Studio and Jan bundle all three. They download model files, include an engine and give you a chat window.</p>
+
+    <div class="lrn-cols">
+      <div>
+        <h3 class="lrn-h3">Why people run models locally</h3>
+        <dl class="lrn-dl">
+          <dt>Privacy</dt><dd>Prompts and files stay on hardware you control. That matters for personal data, client files and unpublished work.</dd>
+          <dt>Cost at high volume</dt><dd>Once you own the hardware, each extra answer costs only electricity. With heavy, steady use this can be cheaper than paying an online service per token. With light use it is usually more expensive. <a href="#/learn/costs">Chapter 11</a> compares the options.</dd>
+          <dt>Works offline</dt><dd>It runs without an internet connection, for example on a train or in a network cut off from the outside.</dd>
+          <dt>Control</dt><dd>The model only changes when you change it. Online services update and retire their models on their own schedule.</dd>
+          <dt>Customisation</dt><dd>You can choose a model for your language or field, change its settings, or train it further on your own examples (fine-tuning).</dd>
+        </dl>
+      </div>
+      <div>
+        <h3 class="lrn-h3">The downsides</h3>
+        <dl class="lrn-dl">
+          <dt>Smaller models</dt><dd>Models that fit on ordinary hardware are smaller than the largest online services and make more mistakes on hard tasks. The biggest open models need servers with several large graphics cards.</dd>
+          <dt>You maintain it</dt><dd>Installing, updating, securing and backing up the system is your job.</dd>
+          <dt>Speed depends on hardware</dt><dd>A laptop without a graphics card works, but slowly.</dd>
+          <dt>Up-front cost</dt><dd>Hardware is paid for in advance, whether it is busy or idle.</dd>
+        </dl>
+      </div>
+    </div>
+    <details class="more lrn-more">
+      <summary>When a local set-up can still send data out</summary>
+      <div class="more-body"><p>The model file itself cannot send anything. The program around it can: some apps check for updates, collect usage statistics or offer optional online models next to the local ones. Read the privacy settings, switch off what you do not need, and block the program's network access if you must be certain.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 2 · MEMORY ================= -->
+<section class="lrn-ch" id="lrn-memory" data-ch="memory" aria-labelledby="lrn-memory-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 02</span>
+      <h2 class="headline" id="lrn-memory-h">Memory decides what fits</h2>
+      <p class="lead lrn-sum">The whole model file has to fit into memory, and its size is roughly the number of parameters times the bytes stored for each one.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>When the engine starts, it loads the entire model file into memory. If the file is larger than the memory available, the model either does not start or runs very slowly, because parts of it must be fetched from slower memory for every token.</p>
+    </div>
+
+    <div class="lrn-scrolly" data-scene="memory">
+      <div class="lrn-steps">
+        <div class="lrn-step" data-p="9" data-q="f16">
+          <h3>Parameters and bytes</h3>
+          <p>A model consists of billions of numbers called parameters. The name usually says how many: “9B” means 9 billion. At full 16-bit precision each parameter takes 2 bytes, so a 9B model is about 18 GB. That is too big for a laptop with 8 or 16 GB of memory.</p>
+        </div>
+        <div class="lrn-step" data-p="9" data-q="q4">
+          <h3>The same model at 4-bit</h3>
+          <p>Stored at 4-bit, each parameter takes a little over half a byte and the file shrinks to about 5.5 GB. Now it fits on a laptop with 16 GB, with room left for the conversation. Chapter 3 explains how this works.</p>
+        </div>
+        <div class="lrn-step" data-p="30" data-q="q4">
+          <h3>A mid-sized model</h3>
+          <p>A 30B model at 4-bit is about 18 GB. It needs a graphics card with 24 GB of memory or a computer with plenty of shared memory.</p>
+        </div>
+        <div class="lrn-step" data-p="1000" data-q="q4">
+          <h3>The largest open models</h3>
+          <p>The biggest open models have several hundred billion to more than a trillion parameters. Even at 4-bit, a model with a trillion parameters is about 600 GB and needs a server with eight large graphics cards.</p>
+          <p class="fine">Move the slider to try other sizes.</p>
+        </div>
+      </div>
+      <figure class="lrn-stage lrn-demo" aria-labelledby="lrn-mem-cap">
+        <figcaption class="lrn-read" id="lrn-mem-cap">Each row is one machine's memory. The teal block is the model file and the hatched end is kept by the system. A block that reaches past the end does not fit.</figcaption>
+        <div class="lrn-ctrls">
+          <div class="field">
+            <label for="lrn-mem-p">Model size</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-mem-p" min="0" max="1000" step="1" value="500" aria-describedby="lrn-mem-similar"><output id="lrn-mem-pv" for="lrn-mem-p">9B</output><div class="ticks" aria-hidden="true"><span>1B</span><span>10B</span><span>100B</span><span>1T</span></div></div>
+          </div>
+          <div class="field">
+            <span class="field-label" id="lrn-mem-ql">Precision</span>
+            <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-mem-ql">
+              <button type="button" data-memq="f16" aria-pressed="true">16-bit</button>
+              <button type="button" data-memq="q8" aria-pressed="false">8-bit</button>
+              <button type="button" data-memq="q4" aria-pressed="false">4-bit</button>
+            </div>
+          </div>
+        </div>
+        <div class="lrn-readout">
+          <div class="lrn-big num" id="lrn-mem-gb">18 GB</div>
+          <div class="small" id="lrn-mem-formula"></div>
+          <div class="fine" id="lrn-mem-similar"></div>
+        </div>
+        <div class="lrn-rows" id="lrn-mem-rows" aria-live="polite"></div>
+      </figure>
+    </div>
+
+    <h3 class="lrn-h3">Three kinds of memory</h3>
+    <dl class="lrn-dl lrn-dl-wide">
+      <dt>Graphics memory (VRAM)</dt><dd>Sits on the graphics card (GPU). It is very fast and limited in size: usually 8 to 32 GB on gaming cards and 80 GB or more on server cards.</dd>
+      <dt>System memory (RAM)</dt><dd>The computer's main memory. It is larger and cheaper but several times slower to read, so a model running from RAM writes slowly.</dd>
+      <dt>Unified memory</dt><dd>One pool shared by the processor and the graphics part, as in Apple silicon Macs and mini PCs with AMD Ryzen AI Max chips. It is slower than graphics memory but can be much larger, so these machines can hold big models. The system keeps part of it for itself; on a Mac with plenty of memory, roughly a quarter by default.</dd>
+    </dl>
+    <p class="lrn-p">If a model is a little too large for the graphics card, engines such as llama.cpp can keep part of it in system RAM. This is called offloading. The model runs, but every token waits for the slower memory. The Models page tells you when a model would rely on system RAM.</p>
+    <details class="more lrn-more">
+      <summary>Why files are a little bigger than parameters × bytes</summary>
+      <div class="more-body"><p>Quantised files store a small scale value for every group of weights, so a “4-bit” file averages about 4.8 to 4.9 bits per weight. On top of the file, the engine needs room for the conversation memory (chapter 5) and its own working space, usually one to a few gigabytes.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 3 · QUANTISATION ================= -->
+<section class="lrn-ch" id="lrn-quantisation" data-ch="quantisation" aria-labelledby="lrn-quant-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 03</span>
+      <h2 class="headline" id="lrn-quant-h">Quantisation: smaller files</h2>
+      <p class="lead lrn-sum">Quantisation stores each of the model's numbers with fewer bits, which makes the file several times smaller at a small cost in quality.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>A model's weights are usually published as 16-bit numbers. Quantisation stores them with fewer bits, much like rounding 0.0183472 to 0.018: each number takes less space and becomes slightly less exact. A model with billions of weights tolerates small rounding errors well, up to a point.</p>
+      <p>In practice the weights are rounded in small groups of 16 to 32. Each group keeps its own scale at higher precision, and every weight in the group is stored as one of a fixed number of steps on that scale. With 4 bits there are 16 steps; with 2 bits only 4. The effect on quality is comparable to saving a photo at a lower JPEG setting: hard to notice at moderate settings, obvious at the extreme.</p>
+    </div>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-q-cap">
+      <figcaption class="lrn-read" id="lrn-q-cap">Outlined bars are the original weights of one group. Filled bars are the values actually stored. Dashed lines are the steps allowed at this precision.</figcaption>
+      <div class="lrn-split">
+        <div>
+          <div class="field">
+            <label for="lrn-q-bits">Bits per weight</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-q-bits" min="0" max="6" step="1" value="4" aria-valuetext="4-bit"><output id="lrn-q-bv" for="lrn-q-bits">4-bit</output><div class="ticks" aria-hidden="true"><span>16</span><span>8</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span></div></div>
+          </div>
+          <div class="lrn-readout">
+            <div class="label" id="lrn-q-model">A 27B model at this precision</div>
+            <div class="lrn-big num" id="lrn-q-gb">16 GB</div>
+            <p class="small" id="lrn-q-note"></p>
+            <p class="fine" id="lrn-q-err"></p>
+          </div>
+        </div>
+        <div class="lrn-qvis" id="lrn-q-vis" role="img" aria-label="Bar chart of twenty-four weights in one group, original and rounded"></div>
+      </div>
+    </figure>
+
+    <p class="lrn-p">The quality notes in the demo are typical results for chat use. The loss is usually smaller for large models than for small ones, and it shows first in exact tasks such as maths, code and less common languages.</p>
+
+    <h3 class="lrn-h3">Models released already compressed</h3>
+    <p class="lrn-p">Some labs publish their models at 8-bit or 4-bit from the start, or train them knowing they will be rounded. The second method is called quantisation-aware training (QAT), and it makes the 4-bit version lose less. For such models the original file is already small, and a higher setting adds size without adding quality. Google, for example, publishes official QAT 4-bit files for Gemma 4.</p>
+    <p class="lrn-p" id="lrn-q-native"></p>
+    <details class="more lrn-more">
+      <summary>Conversation memory can be quantised too</summary>
+      <div class="more-body"><p>Engines can also store the conversation memory (chapter 5) at 8-bit or 4-bit. 8-bit halves its size with almost no visible effect. 4-bit saves more but can hurt quality on long documents.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 4 · SPEED ================= -->
+<section class="lrn-ch" id="lrn-speed" data-ch="speed" aria-labelledby="lrn-speed-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 04</span>
+      <h2 class="headline" id="lrn-speed-h">Memory speed sets writing speed</h2>
+      <p class="lead lrn-sum">For each token it writes, the engine reads the model's active weights from memory, so the speed of the memory decides how fast text appears.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>A language model writes one token at a time. For each token, the engine reads every active weight from memory once and calculates with it. Reading billions of numbers takes longer than the arithmetic, so on most hardware the speed of the memory sets the writing speed. That speed is called bandwidth and is measured in gigabytes per second (GB/s).</p>
+      <p class="lrn-rule">Upper limit: tokens per second ≈ memory bandwidth ÷ gigabytes read per token. A graphics card that reads 1,000 GB/s can read a 17 GB model about 60 times per second, so it writes at most about 60 tokens per second. Real engines reach part of that limit.</p>
+    </div>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-spd-cap">
+      <figcaption class="lrn-read" id="lrn-spd-cap">The text in the box appears at the estimated speed for this device and model.</figcaption>
+      <div class="lrn-ctrls">
+        <div class="field">
+          <span class="field-label" id="lrn-spd-dl">Device</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-spd-dl" id="lrn-spd-devs"></div>
+          <span class="fine" id="lrn-spd-devnote"></span>
+        </div>
+        <div class="field">
+          <span class="field-label" id="lrn-spd-ml">Model, at 4-bit</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-spd-ml" id="lrn-spd-models"></div>
+        </div>
+      </div>
+      <div class="lrn-split lrn-split-even">
+        <div class="lrn-readout">
+          <div class="lrn-statline"><span class="lrn-big num" id="lrn-spd-tps">–</span><span id="lrn-spd-badge"></span></div>
+          <div class="label" id="lrn-spd-unit">tokens per second</div>
+          <p class="small" id="lrn-spd-math"></p>
+        </div>
+        <div class="lrn-type" id="lrn-spd-type" aria-hidden="true"><span id="lrn-spd-text"></span><i class="lrn-caret"></i></div>
+      </div>
+    </figure>
+
+    <div class="lrn-cols">
+      <div>
+        <h3 class="lrn-h3">Tokens and words</h3>
+        <p class="lrn-p">A token is a piece of text: a short word, part of a longer word, or a punctuation mark. In English, 100 tokens are roughly 75 words. German, Swedish and most other languages need more tokens for the same text, so they appear a little more slowly.</p>
+        <p class="lrn-p">Most adults read about 4 words per second. The Models page calls 6 tokens per second “usable” and 15 or more “runs well”.</p>
+      </div>
+      <div>
+        <h3 class="lrn-h3">Reading the prompt comes first</h3>
+        <p class="lrn-p">Before the first word appears, the engine reads your whole prompt, including any pasted documents. This step, called prompt processing, handles many tokens at once and is limited by calculating power more than by memory speed. Graphics cards are very good at it; processors without one are slow.</p>
+        <p class="lrn-p" id="lrn-spd-ttft"></p>
+      </div>
+    </div>
+    <h3 class="lrn-h3">Thinking models take longer to start</h3>
+    <p class="lrn-p">Some models first write out their reasoning, which most apps fold away, and only then the answer. These thinking tokens are produced at the same speed as the answer. <span id="lrn-spd-think"></span> gpt-oss and GLM-5.3, for example, always think; other models let you switch it off or choose a lower effort.</p>
+    <details class="more lrn-more">
+      <summary>Several users at once</summary>
+      <div class="more-body"><p>When several people use a server at the same time, the engine reads the weights once per step and calculates the next token for all of their conversations together. This is called batching. Each person gets nearly the speed of a single user while the machine's total output grows several times. llama.cpp and Ollama can serve a few requests at once; vLLM and SGLang are built to do it at large scale.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 5 · CONTEXT ================= -->
+<section class="lrn-ch" id="lrn-context" data-ch="context" aria-labelledby="lrn-ctx-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 05</span>
+      <h2 class="headline" id="lrn-ctx-h">Context and conversation memory</h2>
+      <p class="lead lrn-sum">The text a model keeps in view needs memory of its own, and every person using the model at the same time needs a separate share.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>The context is all the text the model can see at once: its instructions, the conversation so far, any documents you added and the answer it is writing. It is measured in tokens. 8,000 tokens are about 12 pages of text; 128,000 tokens are about 200 pages.</p>
+      <p>So that it does not have to re-read the whole context for every new token, the engine keeps intermediate results for each token it has seen. This store is called the KV cache (key-value cache); this guide calls it conversation memory. It grows with every token and sits in memory next to the model.</p>
+      <p>How fast it grows depends on how the model is built. Older designs store a full entry for every token in every layer. Most models released in 2026 store it in only some of their layers or in compressed form, and need far less.</p>
+    </div>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-ctx-cap">
+      <figcaption class="lrn-read" id="lrn-ctx-cap">Teal is the model file at 4-bit, dark green is conversation memory. Dashed lines mark a 24 GB and an 80 GB graphics card.</figcaption>
+      <div class="lrn-ctrls">
+        <div class="field">
+          <label for="lrn-ctx-c">Context length</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-ctx-c" min="0" max="9" step="1" value="2"><output id="lrn-ctx-cv" for="lrn-ctx-c">8k tokens</output><div class="ticks" aria-hidden="true"><span>2k</span><span>16k</span><span>128k</span><span>1M</span></div></div>
+        </div>
+        <div class="field">
+          <label for="lrn-ctx-u">People using it at the same time</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-ctx-u" min="0" max="6" step="1" value="0"><output id="lrn-ctx-uv" for="lrn-ctx-u">1</output><div class="ticks" aria-hidden="true"><span>1</span><span>8</span><span>64</span></div></div>
+        </div>
+      </div>
+      <div class="lrn-ctxbars" id="lrn-ctx-bars"></div>
+      <p class="small lrn-ctx-sum" id="lrn-ctx-sum" aria-live="polite"></p>
+    </figure>
+
+    <p class="lrn-p">Every conversation has its own cache. Ten people working with long documents at the same time need ten caches, so on a shared server the conversation memory can be larger than the model itself.</p>
+    <details class="more lrn-more">
+      <summary>Ways to save conversation memory</summary>
+      <div class="more-body">
+        <p>Set a shorter context in the engine if you do not need the maximum. A model's maximum context is a limit, and you can use less. Store the cache at 8-bit, which halves it. For a shared server, choose a model with a small cache. The <a href="#/sizes">Sizes page</a> and the <a href="#/calculator">Calculator</a> let you set the context length and the number of users.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 6 · MIXTURE OF EXPERTS ================= -->
+<section class="lrn-ch" id="lrn-moe" data-ch="moe" aria-labelledby="lrn-moe-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 06</span>
+      <h2 class="headline" id="lrn-moe-h">Mixture of experts</h2>
+      <p class="lead lrn-sum">Some large models use only a small part of their weights for each token, so they need a lot of memory but write quickly.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>In a dense model, every weight takes part in every token. A mixture-of-experts (MoE) model splits part of each layer into many smaller blocks called experts. A small routing step picks a few experts for each token, and the others are not used for that token.</p>
+      <p>All experts have to be in memory, because the next token may need different ones. Only the chosen experts are read, so the model writes about as fast as a much smaller dense model. MoE models are often named with two numbers: 35B-A3B means 35 billion parameters in total and about 3 billion active per token.</p>
+    </div>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-moe-cap">
+      <figcaption class="lrn-read" id="lrn-moe-cap">Each square is one expert in a single layer. Lit squares are the experts chosen for the highlighted word. All squares must be in memory; only the lit ones are read.</figcaption>
+      <div class="lrn-ctrls">
+        <div class="field">
+          <span class="field-label" id="lrn-moe-ml">Model</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-moe-ml" id="lrn-moe-models"></div>
+        </div>
+      </div>
+      <p class="fine lrn-hint" id="lrn-moe-hint">Point at a word, drag across the sentence, or use the arrow keys.</p>
+      <div class="lrn-tokens" id="lrn-moe-tokens" role="toolbar" aria-label="Words of the example sentence" aria-describedby="lrn-moe-hint"></div>
+      <div class="lrn-experts" id="lrn-moe-grid" aria-hidden="true"></div>
+      <p class="fine" id="lrn-moe-layer"></p>
+      <div class="lrn-kpis" id="lrn-moe-kpis"></div>
+      <p class="small" id="lrn-moe-speed"></p>
+    </figure>
+
+    <p class="lrn-p">Despite the name, experts do not divide the work by subject such as law or cooking. The split is learned during training and is hard for people to interpret.</p>
+    <p class="lrn-p">Because only a few experts are read per token, MoE models stay usable when part of them sits in slower system RAM. llama.cpp can keep the experts in RAM and the rest of the model on the graphics card, so a gaming PC can run MoE models larger than its graphics memory.</p>
+    <details class="more lrn-more">
+      <summary>MoE with many users at once</summary>
+      <div class="more-body"><p>On a shared server, different users' tokens choose different experts, so each step reads a larger part of the model. The speed advantage over a dense model of the same total size therefore shrinks as the number of users grows. The memory needed stays the same: all experts are always loaded.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 7 · TOOLS ================= -->
+<section class="lrn-ch" id="lrn-tools" data-ch="tools" aria-labelledby="lrn-tools-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 07</span>
+      <h2 class="headline" id="lrn-tools-h">The tools</h2>
+      <p class="lead lrn-sum">Desktop apps, engines, servers and web interfaces each do a different job, and the right one depends on your hardware and how many people will use it.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-cols">
+      <div>
+        <h3 class="lrn-h3">Engine, app and interface</h3>
+        <dl class="lrn-dl">
+          <dt>Engine</dt><dd>Does the calculation. llama.cpp, MLX, vLLM and SGLang are engines. Most have no window of their own: you start them from the command line and other programs talk to them.</dd>
+          <dt>Desktop app</dt><dd>Bundles an engine with a model downloader and a chat window. Ollama, LM Studio and Jan are desktop apps.</dd>
+          <dt>Web interface</dt><dd>A chat page that connects to an engine over the network. Open WebUI is a widely used example. It adds user accounts, chat history and document upload, and does not run models itself.</dd>
+        </dl>
+        <p class="lrn-p">Most of these tools offer an OpenAI-compatible API, which accepts the same requests as OpenAI's online service. Programs written for that service can use your local model once you change the address they send requests to.</p>
+      </div>
+      <div>
+        <h3 class="lrn-h3">Why so many apps use llama.cpp</h3>
+        <p class="lrn-p">llama.cpp is an open-source engine that runs on almost any hardware: NVIDIA, AMD, Intel and Apple graphics, or a plain processor. Jan, KoboldCpp, llamafile and the llama.cpp team's own desktop app run it directly. LM Studio uses llama.cpp and can also use Apple's MLX on a Mac. Ollama started on llama.cpp and now runs many models on its own engine, built on ggml, the library at the core of llama.cpp. New model types therefore often work in llama.cpp first and reach the apps a little later.</p>
+      </div>
+    </div>
+
+    <h3 class="lrn-h3">Which engine for which job</h3>
+    <dl class="lrn-dl lrn-dl-wide">
+      <dt>One person, any hardware</dt><dd>llama.cpp or an app built on it. It runs on Windows, macOS and Linux, with or without a graphics card, and can split a model between graphics memory and system RAM.</dd>
+      <dt>Many users, large graphics cards</dt><dd>vLLM or SGLang on Linux servers. They serve many conversations at once efficiently, but expect the whole model to fit in graphics memory and reserve most of that memory when they start.</dd>
+      <dt>Apple silicon Macs</dt><dd>MLX, directly or through LM Studio or Ollama. It is often faster than llama.cpp on the same Mac.</dd>
+      <dt>Laptops with an NPU</dt><dd>An NPU is a chip built for AI tasks. Lemonade uses the NPU in AMD Ryzen AI laptops and OpenVINO the one in Intel Core Ultra laptops. Both need specially prepared models.</dd>
+    </dl>
+
+    <div class="lrn-demo lrn-panel lrn-finder" id="lrn-finder">
+      <h3 class="lrn-h3 lrn-mt0">Find a tool</h3>
+      <p class="small lrn-mt0">Answer as many of the questions as you like. Suggestions appear below and update as you go.</p>
+      <div class="lrn-qs" id="lrn-tool-qs"></div>
+      <div class="lrn-rec" id="lrn-tool-rec" aria-live="polite"></div>
+    </div>
+
+    <details class="more lrn-more" id="lrn-tools-all">
+      <summary><span id="lrn-tools-all-t">All tools, by type</span></summary>
+      <div class="more-body">
+        <label class="switch lrn-onlymatch" id="lrn-tools-only-w" hidden><input type="checkbox" id="lrn-tools-only"><span>Show only tools that match your answers</span></label>
+        <div id="lrn-tools-list"></div>
+        <p class="fine">Tool details were checked in November 2026. Versions change often, so check each project's page before you install.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 8 · FORMATS ================= -->
+<section class="lrn-ch" id="lrn-formats" data-ch="formats" aria-labelledby="lrn-fmt-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 08</span>
+      <h2 class="headline" id="lrn-fmt-h">Model files</h2>
+      <p class="lead lrn-sum">The same model is published in several formats and sizes, and the file name tells you which one you are looking at.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <h3 class="lrn-h3 lrn-mt0">Common formats</h3>
+    <dl class="lrn-dl lrn-dl-wide">
+      <dt>GGUF</dt><dd>One file that holds the weights, usually quantised, together with the settings needed to run them. Used by llama.cpp and the apps built on it. The usual choice for laptops, desktops and Macs.</dd>
+      <dt>Safetensors</dt><dd>The format labs use for their original releases, usually at 16-bit and split into several files. Used by vLLM, SGLang and Hugging Face's own libraries. Unlike older .bin and .pt files, a safetensors file cannot run hidden code when it is loaded.</dd>
+      <dt>MLX</dt><dd>Weights converted for Apple's MLX engine, often at 4-bit or 8-bit. Many are published by the mlx-community organisation on Hugging Face.</dd>
+      <dt>AWQ and GPTQ</dt><dd>Two ways of storing a model at 4-bit for graphics-card servers running vLLM, SGLang and similar engines.</dd>
+      <dt>FP8, MXFP4 and NVFP4</dt><dd>Compact 8-bit and 4-bit number formats that newer NVIDIA graphics cards can calculate with directly. Many labs now publish official files in these formats.</dd>
+      <dt>EXL3</dt><dd>The format of the ExLlamaV3 engine for NVIDIA graphics cards. It keeps good quality at low bit counts.</dd>
+    </dl>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-fn-cap">
+      <figcaption class="lrn-read" id="lrn-fn-cap">Each part of the file name is explained below it. Pick an example or paste a file name you found.</figcaption>
+      <div class="chips" id="lrn-fn-ex" role="group" aria-label="Example file names"></div>
+      <label class="lbl lrn-mt" for="lrn-fn-in">File name</label>
+      <input type="text" id="lrn-fn-in" spellcheck="false" autocomplete="off" autocapitalize="off">
+      <div class="lrn-fn-parts" id="lrn-fn-parts" aria-hidden="true"></div>
+      <dl class="lrn-fn-explain" id="lrn-fn-explain" aria-live="polite"></dl>
+    </figure>
+
+    <h3 class="lrn-h3">What Q4_K_M means</h3>
+    <p class="lrn-p">Q4 means about 4 bits per weight. K stands for the “K-quant” method, which stores weights in small groups that each have their own scale. M stands for medium: some of the most sensitive parts of the model are kept at 6-bit. The S (small) variant keeps nearly everything at 4-bit. On average a Q4_K_M file uses about 4.9 bits per weight, and it is the usual default for llama.cpp and the apps built on it.</p>
+
+    <div class="lrn-cols">
+      <div>
+        <h3 class="lrn-h3">Where to download</h3>
+        <p class="lrn-p">Almost all open models are published on Hugging Face (huggingface.co), a website that hosts model files.</p>
+        <p class="lrn-p"><b>Official repositories</b> sit under the lab's own organisation name. The lab publishes the original weights there, usually as safetensors.</p>
+        <p class="lrn-p"><b>Community uploads</b> convert official weights into GGUF and other formats. Widely used uploaders include unsloth, bartowski, ggml-org (the llama.cpp team) and lmstudio-community. Their files contain the same model in another format. When a lab publishes its own GGUF files, those are the safest choice.</p>
+        <div class="lrn-repo" id="lrn-repo"></div>
+      </div>
+      <div>
+        <h3 class="lrn-h3">Spotting a fine-tune</h3>
+        <p class="lrn-p">A fine-tune is a model someone trained further on their own data. Its Hugging Face page lists the original under “base model”. Names that add words such as uncensored, abliterated or merge, or a person's or company's name in front of the lab's model name, usually mark community variants. They can be useful, but the original lab has not tested them, and they may behave differently.</p>
+        <h3 class="lrn-h3">Checking a download</h3>
+        <ul class="lrn-list">
+          <li>Check that the organisation name matches the lab exactly. Copies with similar names exist.</li>
+          <li>Prefer GGUF and safetensors. Older .bin, .pt and .pkl files can contain code that runs when the file is loaded.</li>
+          <li>Read the licence file in the repository before using the model at work (<a href="#/learn/licences">chapter 12</a>).</li>
+          <li>Look at the upload date and the number of downloads. A new upload with few downloads deserves more caution.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9 · MEDIA ================= -->
+<section class="lrn-ch" id="lrn-media" data-ch="media" aria-labelledby="lrn-media-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 09</span>
+      <h2 class="headline" id="lrn-media-h">Images, video and speech</h2>
+      <p class="lead lrn-sum">Picture, video and voice models keep no conversation memory; picture size, clip length and the number of steps set how much memory and time they need.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>Most image and video models are diffusion models. They start from random noise and remove a little of it in each of many steps until a picture appears, guided by your text. There is no conversation, so context length and conversation memory do not apply. Three things set the cost instead: the picture size, the number of frames for video, and the number of steps.</p>
+      <p>Making a picture takes far more calculation than writing a paragraph, so calculating power matters more here than memory speed. Graphics cards have a large lead over processors, and usually over Macs as well.</p>
+    </div>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-med-cap">
+      <figcaption class="lrn-read" id="lrn-med-cap">The short bar is one 1024 × 1024 picture made in 20 steps. The other bar is your setting. Bar length is the amount of calculation.</figcaption>
+      <div class="lrn-ctrls">
+        <div class="field">
+          <span class="field-label" id="lrn-med-ml">What to make</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-med-ml">
+            <button type="button" data-medmode="image" aria-pressed="true">Picture</button>
+            <button type="button" data-medmode="video" aria-pressed="false">Video clip</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="lrn-med-res">Size</label>
+          <select id="lrn-med-res"></select>
+        </div>
+        <div class="field">
+          <label for="lrn-med-steps">Steps</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-med-steps" min="4" max="50" step="1" value="20"><output id="lrn-med-stv" for="lrn-med-steps">20</output></div>
+        </div>
+        <div class="field" id="lrn-med-secw" hidden>
+          <label for="lrn-med-sec">Clip length at 16 frames per second</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-med-sec" min="1" max="10" step="1" value="5"><output id="lrn-med-secv" for="lrn-med-sec">5 s</output></div>
+        </div>
+      </div>
+      <div class="lrn-split lrn-split-even">
+        <div class="lrn-medvis" id="lrn-med-vis" aria-hidden="true"></div>
+        <div>
+          <div class="lrn-readout">
+            <div class="lrn-big num" id="lrn-med-x">1×</div>
+            <div class="small" id="lrn-med-what"></div>
+          </div>
+          <div class="lrn-medbars" id="lrn-med-bars"></div>
+        </div>
+      </div>
+      <p class="fine">Rough figures from a simplified model of how the work grows. Real times depend on the model and the tool.</p>
+    </figure>
+
+    <div class="lrn-cols">
+      <div>
+        <h3 class="lrn-h3">Why video is the hardest</h3>
+        <p class="lrn-p">A five-second clip at 16 frames per second has 80 frames. The model works on all of them together so that motion stays consistent, comparing every part of every frame with every other part. Memory and time therefore grow faster than the clip length: a clip twice as long takes more than twice the time.</p>
+      </div>
+      <div>
+        <h3 class="lrn-h3">What typically fits where</h3>
+        <div id="lrn-med-fit"></div>
+      </div>
+    </div>
+
+    <h3 class="lrn-h3">The main tools</h3>
+    <p class="lrn-p">ComfyUI is where most new image and video models appear first. Diffusers is the Python library behind many tools, and stable-diffusion.cpp is an image engine built on the same library as llama.cpp. For speech, whisper.cpp and faster-whisper turn audio into text, while Piper and Kokoro read text aloud.</p>
+    <div class="lrn-toolchips" id="lrn-med-tools"></div>
+  </div>
+</section>
+
+<!-- ================= 10 · TEAM ================= -->
+<section class="lrn-ch" id="lrn-team" data-ch="team" aria-labelledby="lrn-team-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 10</span>
+      <h2 class="headline" id="lrn-team-h">From one person to a team</h2>
+      <p class="lead lrn-sum">A shared service adds user logins, a web interface, document search and someone who keeps it running.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>On your own computer, one app does everything. A service for a team or a company splits the work into parts, so that each part can be secured, scaled and replaced on its own. The diagram shows the usual set-up.</p>
+    </div>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-team-cap">
+      <figcaption class="lrn-read" id="lrn-team-cap">Requests travel along the arrows to the graphics cards and answers come back the same way. Select a part to read what it does.</figcaption>
+      <label class="switch lrn-mt0"><input type="checkbox" id="lrn-team-rag" checked><span>Show document search</span></label>
+      <div class="lrn-team" id="lrn-team-svg"></div>
+      <div class="lrn-team-info" id="lrn-team-info" aria-live="polite"></div>
+    </figure>
+
+    <h3 class="lrn-h3">Sizing the hardware</h3>
+    <p class="lrn-p">The number that matters is how many people wait for an answer at the same moment. It is far lower than the number of staff, because people read, think and type between questions. Each of those conversations needs its own conversation memory, and all of them share the machine's speed.</p>
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-size-cap">
+      <figcaption class="lrn-read" id="lrn-size-cap">A first estimate for server graphics cards with 80 GB each. The bar shows the memory needed; each segment is one card.</figcaption>
+      <div class="lrn-ctrls">
+        <div class="field">
+          <label for="lrn-size-emp">People who use it</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-size-emp" min="0" max="1000" step="1" value="500"><output id="lrn-size-empv" for="lrn-size-emp">200</output></div>
+        </div>
+        <div class="field">
+          <label for="lrn-size-share">Share waiting for an answer at the same moment</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-size-share" min="1" max="25" step="1" value="5"><output id="lrn-size-sharev" for="lrn-size-share">5%</output></div>
+          <span class="hint">An assumption you set. Measure it once the service runs.</span>
+        </div>
+        <div class="field">
+          <span class="field-label" id="lrn-size-ml">Model, at 8-bit</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-size-ml" id="lrn-size-models"></div>
+        </div>
+        <div class="field">
+          <span class="field-label" id="lrn-size-cl">Context per conversation</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-size-cl">
+            <button type="button" data-sizectx="8192" aria-pressed="false">8k</button>
+            <button type="button" data-sizectx="32768" aria-pressed="true">32k</button>
+            <button type="button" data-sizectx="131072" aria-pressed="false">128k</button>
+          </div>
+        </div>
+      </div>
+      <div class="lrn-readout">
+        <div class="lrn-statline"><span class="lrn-big num" id="lrn-size-cards">–</span><span id="lrn-size-badge"></span></div>
+        <p class="small" id="lrn-size-line"></p>
+      </div>
+      <div class="lrn-cardbar" id="lrn-size-bar"></div>
+      <div class="lrn-actions">
+        <button type="button" class="btn btn-sm" id="lrn-size-calc">Open these numbers in the Calculator</button>
+      </div>
+    </figure>
+
+    <h3 class="lrn-h3">Running it safely</h3>
+    <dl class="lrn-dl lrn-dl-wide">
+      <dt>Keep data inside</dt><dd>Run the service in your own network or in a cloud account your company controls. Switch off optional online features and usage statistics in each tool. Decide whether chat history is stored, and for how long.</dd>
+      <dt>Never expose an engine to the internet</dt><dd>Engines such as Ollama, llama.cpp and vLLM listen on a network port. Ollama's API has no login at all, and the others offer only simple keys. Let only the gateway reach them, and put the gateway behind HTTPS and your company login.</dd>
+      <dt>Log with care</dt><dd>Record who used which model and how much, so you can plan capacity and investigate misuse. Logging the full text of prompts creates a store of sensitive data; decide on purpose whether to do it, who may read it and when it is deleted.</dd>
+      <dt>Plan updates</dt><dd>Engines and models are updated often, with fixes and speed gains. Try a new version on a test machine first and keep the previous version ready to switch back.</dd>
+      <dt>Back up what you cannot download again</dt><dd>Model files can be downloaded again. Settings, user accounts, chat history and the document index cannot. Back them up and test a restore.</dd>
+    </dl>
+
+    <h3 class="lrn-h3">When a paid API still makes sense</h3>
+    <p class="lrn-p">A mixed set-up often works well. Everyday and sensitive work runs locally, while tasks that need the strongest models, or rare peaks in demand, go to a paid online service through the same gateway. Write down which data may leave the company, and enforce that rule in the gateway where you can.</p>
+
+    <h3 class="lrn-h3">Checklists</h3>
+    <div class="segmented segmented-sm" role="tablist" aria-label="Checklist" id="lrn-cl-tabs">
+      <button type="button" role="tab" id="lrn-cl-t1" aria-selected="true" aria-controls="lrn-cl-small" data-cl="small">Small business</button>
+      <button type="button" role="tab" id="lrn-cl-t2" aria-selected="false" aria-controls="lrn-cl-ent" data-cl="ent" tabindex="-1">Enterprise</button>
+    </div>
+    <div class="lrn-cl" id="lrn-cl-small" role="tabpanel" aria-labelledby="lrn-cl-t1">
+      <ul class="lrn-check">
+        <li><label><input type="checkbox"> Test one or two models with your real tasks before buying hardware.</label></li>
+        <li><label><input type="checkbox"> Choose the machine: a workstation with one or two graphics cards, or a Mac or mini PC with plenty of shared memory.</label></li>
+        <li><label><input type="checkbox"> Install an engine and a web interface with user accounts, for example llama.cpp or Ollama behind Open WebUI.</label></li>
+        <li><label><input type="checkbox"> Keep it on your internal network. Use a VPN for access from outside.</label></li>
+        <li><label><input type="checkbox"> Turn on HTTPS and require a login for everyone.</label></li>
+        <li><label><input type="checkbox"> Name the person who looks after it, and plan a monthly update.</label></li>
+        <li><label><input type="checkbox"> Back up settings, accounts and any stored chat history.</label></li>
+        <li><label><input type="checkbox"> Check the licence of the model and of each program.</label></li>
+        <li><label><input type="checkbox"> Tell staff what they may put into it, and that answers can be wrong.</label></li>
+        <li><label><input type="checkbox"> Check data protection duties with whoever advises you on them.</label></li>
+      </ul>
+    </div>
+    <div class="lrn-cl" id="lrn-cl-ent" role="tabpanel" aria-labelledby="lrn-cl-t2" hidden>
+      <ul class="lrn-check">
+        <li><label><input type="checkbox"> Name an owning team and an on-call rota for the service.</label></li>
+        <li><label><input type="checkbox"> Have legal review the licence of every model and program, including revenue caps and hosted-service clauses.</label></li>
+        <li><label><input type="checkbox"> Involve the data protection officer. Check whether a data protection impact assessment is needed and keep the required records.</label></li>
+        <li><label><input type="checkbox"> Check which AI regulation applies to your use, such as the EU AI Act in Europe.</label></li>
+        <li><label><input type="checkbox"> Connect logins to single sign-on, with roles and limits per team, through a gateway.</label></li>
+        <li><label><input type="checkbox"> Write a logging policy: what is logged, who can read it, how long it is kept.</label></li>
+        <li><label><input type="checkbox"> Isolate the engines on the network so that only the gateway can reach them.</label></li>
+        <li><label><input type="checkbox"> Size capacity from measured peak use, and load-test before launch.</label></li>
+        <li><label><input type="checkbox"> Build a test set from real tasks and run it after every model or engine change.</label></li>
+        <li><label><input type="checkbox"> Test updates on a staging system before production.</label></li>
+        <li><label><input type="checkbox"> Plan for hardware failure: spare capacity or a fallback service, plus tested backups.</label></li>
+        <li><label><input type="checkbox"> Publish a usage policy and train staff.</label></li>
+      </ul>
+    </div>
+    <p class="fine">These checklists give general guidance only. Check data protection, regulation and licence questions with your own legal or compliance people.</p>
+  </div>
+</section>
+
+<!-- ================= 11 · COSTS ================= -->
+<section class="lrn-ch" id="lrn-costs" data-ch="costs" aria-labelledby="lrn-cost-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 11</span>
+      <h2 class="headline" id="lrn-cost-h">What it costs</h2>
+      <p class="lead lrn-sum">You can pay per token, rent a graphics card by the hour or buy your own hardware, and the amount of steady use decides which costs least.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-prose">
+      <p>There are four common ways to use an open model, and each is paid for differently. This chapter explains how they are priced, so that the figures on the <a href="#/costs">Costs page</a> make sense.</p>
+    </div>
+
+    <!-- 1 · Tokens and prices -->
+    <h3 class="lrn-h3">Online services charge per token</h3>
+    <div class="lrn-prose">
+      <p>Online AI services measure use in tokens, the pieces of words described in <a href="#/learn/speed">chapter 4</a>. A token is about three quarters of an English word, so 1,000 tokens are roughly 750 words. Most other languages need more tokens for the same text.</p>
+      <p>Prices are quoted per million tokens, because a single token costs only a tiny fraction of a cent. Most price lists show two prices. Input tokens are everything sent to the model: your question, any documents, the instructions the app adds and, in a chat, the conversation so far. Output tokens are the text the model writes back. Output usually costs several times as much as input, because the model writes one token at a time but reads the input in large batches.</p>
+      <p>In a chat, the app sends the whole conversation again with every new message, so the input grows with each turn. Many providers charge less for cached input: text that repeats the beginning of a recent request, such as a long set of instructions or the earlier part of a chat. The size of the discount, and how long the text stays cached, differ between providers.</p>
+      <p>Thinking models (chapter 4) write out their reasoning before the answer. Providers bill these tokens as output, even when the app hides them, so a thinking model can cost much more for an answer of the same length.</p>
+    </div>
+
+    <div class="lrn-split lrn-split-even lrn-tokens-ex">
+      <div>
+        <h4 class="lrn-h4 lrn-mt0">Typical sizes, approximately</h4>
+        <dl class="lrn-tokdl">
+          <dt>A short question</dt><dd>20–50 tokens</dd>
+          <dt>An answer of a few paragraphs</dt><dd>300–800 tokens</dd>
+          <dt>One page of text</dt><dd>about 650 tokens</dd>
+          <dt>A 20-page report</dt><dd>about 13,000 tokens</dd>
+          <dt>A working day of steady chat for one person</dt><dd>50,000–100,000 tokens</dd>
+        </dl>
+        <p class="fine">For English text. Most of a day's chat is input, because every message carries the conversation before it.</p>
+      </div>
+      <div>
+        <h4 class="lrn-h4 lrn-mt0">One summary, worked out</h4>
+        <p class="lrn-p">Summarising a 10-page report sends about 6,500 input tokens and returns a one-page summary of about 650 output tokens. At example prices of €0.50 per million input tokens and €2 per million output tokens:</p>
+        <p class="lrn-rule">6,500 × €0.50 ÷ 1,000,000 + 650 × €2 ÷ 1,000,000 ≈ €0.0046, about half a euro cent. A thousand such summaries cost about €4.55.</p>
+        <p class="small" id="lrn-cost-range" hidden></p>
+      </div>
+    </div>
+    <details class="more lrn-more">
+      <summary>Other things that change the bill</summary>
+      <div class="more-body"><p>Some providers charge less for requests that may wait several hours, which suits large jobs such as processing an archive. Some charge a higher rate when a prompt is very long. Models for pictures, speech and video are usually priced per picture, per minute of audio or per second of video instead of per token. Price lists for businesses usually show prices before VAT.</p></div>
+    </details>
+
+    <!-- 2 · Four ways to pay -->
+    <h3 class="lrn-h3">Four ways to pay</h3>
+    <p class="lrn-p">The Costs page compares four ways of using a model. They differ in how you pay, who handles your data and how much of the work is yours.</p>
+    <div class="lrn-ways">
+      <div>
+        <p class="label">Pay per token</p>
+        <h4>A hosted API for an open model</h4>
+        <p>A provider runs an open model on its servers, and your chat app or program sends requests to it over the internet. You pay for the tokens you use and nothing in a month you use none, and there is no hardware to look after. The provider processes your prompts and documents, so its terms, and the country where it runs the model, decide what you may send. Because the model is open, you can later move to another provider or to your own hardware and keep the same model.</p>
+        <p class="small"><b>Left to you:</b> picking a provider whose terms suit your data, and the app or program that sends the requests.</p>
+      </div>
+      <div>
+        <p class="label">Pay per hour</p>
+        <h4>Renting a GPU</h4>
+        <p>A cloud provider rents you a machine with one or more graphics cards. You install an engine and the model yourself, as on your own computer, and pay for every hour the machine is switched on, whether it is busy or idle. You decide which model and version run, and the machine works only for you, although it stands in the provider's data centre under the provider's terms. On-demand machines can be started and stopped at any time. Reserved machines are booked for months or years at a lower hourly price.</p>
+        <p class="small"><b>Left to you:</b> setting up, securing and updating the software, and switching the machine off when nobody needs it.</p>
+      </div>
+      <div>
+        <p class="label">Pay once</p>
+        <h4>Buying hardware</h4>
+        <p>You pay for the machine once, then for electricity and upkeep. Everything runs on hardware you control, at home, in the office or in your own server room, which gives you the most say over your data and over when anything changes. The machine costs the same whether it is busy or idle, so its cost per token falls the more it is used.</p>
+        <p class="small"><b>Left to you:</b> all of it, from installation and security to repairs, backups and replacement.</p>
+      </div>
+      <div>
+        <p class="label">Pay per seat or per token</p>
+        <h4>Paid closed assistants</h4>
+        <p>A closed model is one whose weights are not published, so you can use it only through the vendor's own service. You pay either a fixed monthly fee per person, called a seat, for a ready-made chat app, or per token through the vendor's API. On hard tasks the leading closed models usually do better than models that fit on ordinary hardware. The vendor sets the prices and the terms for your data, and decides when models change or are retired. The Costs page shows these services for reference only, because they run different models from the open one you are pricing.</p>
+        <p class="small"><b>Left to you:</b> checking the vendor's terms and data settings, for example whether your chats may be used to train its models.</p>
+      </div>
+    </div>
+    <details class="more lrn-more">
+      <summary>The four ways side by side</summary>
+      <div class="more-body">
+        <table class="lrn-cmp">
+          <thead><tr><th scope="col"><span class="sr">Question</span></th><th scope="col">Hosted API</th><th scope="col">Rented GPU</th><th scope="col">Own hardware</th><th scope="col">Paid assistant</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Where the model runs</th><td data-l="Hosted API">The provider's servers</td><td data-l="Rented GPU">A rented machine in the provider's data centre</td><td data-l="Own hardware">Your home, office or server room</td><td data-l="Paid assistant">The vendor's servers</td></tr>
+            <tr><th scope="row">Who handles your data</th><td data-l="Hosted API">The provider, under its terms</td><td data-l="Rented GPU">You, on the provider's hardware</td><td data-l="Own hardware">You</td><td data-l="Paid assistant">The vendor, under its terms</td></tr>
+            <tr><th scope="row">Who keeps it running</th><td data-l="Hosted API">The provider</td><td data-l="Rented GPU">You run the software; the provider looks after the hardware</td><td data-l="Own hardware">You</td><td data-l="Paid assistant">The vendor</td></tr>
+            <tr><th scope="row">How you pay</th><td data-l="Hosted API">Per token</td><td data-l="Rented GPU">Per hour switched on</td><td data-l="Own hardware">Once, then running costs</td><td data-l="Paid assistant">Per seat each month, or per token</td></tr>
+            <tr><th scope="row">When the model changes</th><td data-l="Hosted API">When the provider stops offering it; you can move to another provider</td><td data-l="Rented GPU">When you decide</td><td data-l="Own hardware">When you decide</td><td data-l="Paid assistant">When the vendor decides</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <!-- 3 · What owning costs -->
+    <h3 class="lrn-h3">What owning hardware costs</h3>
+    <p class="lrn-p">The price of the machine is only part of what it costs. Everything it costs over its working life, added together, is called the total cost of ownership.</p>
+    <dl class="lrn-dl lrn-dl-wide">
+      <dt>The purchase, spread over years</dt><dd>To compare a purchase with a monthly bill, divide the price by the number of months you expect to use the machine. This is called amortisation. A machine bought for €3,000 and used for three years costs about €83 a month, however much or little it is used.</dd>
+      <dt>A computer for the cards</dt><dd>Graphics cards are sold on their own. They need a host computer with a power supply, cooling, a processor, system memory and storage. For one or two gaming cards that is an ordinary desktop PC. For four or eight server cards it is a special server that adds a large share of the price. The Costs page adds the host computer when it prices bare cards.</dd>
+      <dt>Electricity</dt><dd>A graphics card at full load draws a few hundred watts, and a server with eight cards several kilowatts, plus the cooling to carry the heat away. An idle machine still draws some power: the Costs page assumes about 15% of its full draw.</dd>
+      <dt>Staff time</dt><dd>Someone has to install, update, secure and repair the system. On a personal computer that is your own time. For a company service it is part of someone's job and can cost more than the electricity. On the Costs page you can add these hours under “Change assumptions”.</dd>
+      <dt>Spares and replacement</dt><dd>Hardware fails and ages. A service that people depend on needs a spare machine, a repair contract or a fallback such as a hosted API. After a few years, newer hardware does the same work with less electricity, and the old machine is worth little.</dd>
+      <dt>Prices that move</dt><dd>Prices for graphics cards and memory change quickly, and in 2026 they have been unusually unstable, with AI data centres buying a large share of the supply. Check prices on the day you decide, and treat every price in this guide as an example.</dd>
+      <dt>Used cards</dt><dd>Second-hand graphics cards cost less and can be a sensible way to start. They usually come with little or no warranty, may have run at full load for years, and older models lack features that newer engines use, such as the compact FP8 format (<a href="#/learn/formats">chapter 8</a>).</dd>
+    </dl>
+
+    <h4 class="lrn-h4">Utilisation decides the cost per token</h4>
+    <div class="lrn-prose">
+      <p>Utilisation is the share of time the hardware is actually working. A machine costs much the same each month whether it answers ten questions or ten thousand, so its cost per token depends mainly on how busy it is. For example, a machine that costs €100 a month in total and produces 100 million tokens costs €1 per million tokens. If it produces 10 million, each million costs €10.</p>
+      <p>A hosted API charges the same price per token at any volume, because the provider keeps its machines busy with many customers' requests. Buying therefore costs least when use is high and steady. A team's use is rarely steady: most requests arrive in working hours, and the machine must be large enough for the busiest hour, so it stands idle at night and at weekends.</p>
+    </div>
+    <details class="more lrn-more">
+      <summary>Working out the electricity</summary>
+      <div class="more-body"><p>Multiply the power in watts by the hours the machine runs and divide by 1,000 to get kilowatt-hours (kWh). Then multiply by your price per kWh. Example: a PC that draws 400 watts for 8 hours on 22 working days uses 400 × 8 × 22 ÷ 1,000 ≈ 70 kWh a month. At an example price of €0.25 per kWh that is about €18 a month. Household and business prices differ, and the Costs page lets you choose a region.</p></div>
+    </details>
+
+    <!-- 4 · Break-even demo -->
+    <h3 class="lrn-h3">When buying costs less than paying per token</h3>
+    <p class="lrn-p">Break-even is the point at which two options have cost the same in total. Before it, the option that was cheaper to start is ahead; after it, the option with the lower monthly cost is. The chart shows when a machine you buy reaches that point against a hosted API, for the amount of use you set.</p>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-be-cap">
+      <figcaption class="lrn-read" id="lrn-be-cap">Each line adds up the money spent from today. The line labelled Buy starts at the purchase price and then rises with the electricity bill. The line labelled Hosted API starts at zero and rises with every token. Where the two lines cross, buying has paid for itself. All figures are example prices, not quotes.</figcaption>
+      <div class="lrn-ctrls lrn-be-ctrls">
+        <div class="field lrn-be-tokf">
+          <label for="lrn-be-tok">Tokens per month</label>
+            <div class="range-row"><input class="range" type="range" id="lrn-be-tok" min="0" max="160" step="1" value="120"><output id="lrn-be-tokv" for="lrn-be-tok">1 billion</output><div class="ticks" aria-hidden="true"><span>1M</span><span>10M</span><span>100M</span><span>1B</span><span>10B</span></div></div>
+        </div>
+        <div class="field">
+          <span class="field-label" id="lrn-be-hwl">Machine you buy</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-be-hwl" id="lrn-be-hw">
+            <button type="button" data-behw="gaming" aria-pressed="true">Gaming PC card</button>
+            <button type="button" data-behw="work" aria-pressed="false">Workstation card</button>
+            <button type="button" data-behw="server" aria-pressed="false">8-GPU server</button>
+          </div>
+          <span class="fine" id="lrn-be-hwnote"></span>
+        </div>
+        <div class="field">
+          <span class="field-label" id="lrn-be-apil">Hosted price</span>
+          <div class="segmented segmented-sm" role="group" aria-labelledby="lrn-be-apil" id="lrn-be-api">
+            <button type="button" data-beapi="small" aria-pressed="true">Small model</button>
+            <button type="button" data-beapi="large" aria-pressed="false">Large model</button>
+          </div>
+          <span class="fine" id="lrn-be-apinote"></span>
+        </div>
+      </div>
+      <div class="lrn-readout">
+        <div aria-live="polite" aria-atomic="true">
+          <div class="lrn-big num" id="lrn-be-big">–</div>
+          <div class="label lrn-be-unit" id="lrn-be-unit"></div>
+        </div>
+        <p class="small" id="lrn-be-line"></p>
+      </div>
+      <div class="lrn-be-chart" id="lrn-be-chart"></div>
+      <p class="fine lrn-be-src" id="lrn-be-src"></p>
+      <details class="more lrn-more lrn-be-more">
+        <summary>Example figures used in this chart</summary>
+        <div class="more-body" id="lrn-be-figs"></div>
+      </details>
+    </figure>
+
+    <!-- 5 · Who -->
+    <h3 class="lrn-h3">Which option suits whom</h3>
+    <div class="lrn-three lrn-who">
+      <div>
+        <h4>Just me</h4>
+        <p>If you use AI a few times a day, a hosted API or a chat subscription costs little, and a new machine bought only for this rarely saves money. Running a model on a computer you already own adds little more than electricity and keeps your data with you, so it is worth trying if a model that fits is good enough for your tasks. People who buy hardware for personal use usually do it for privacy, to work offline or to learn.</p>
+      </div>
+      <div>
+        <h4>A small team</h4>
+        <p>At low or uncertain volume, paying per token is cheaper and leaves nothing to maintain. A shared machine pays off when the team uses it heavily every working day. It is also the usual choice, at any volume, when client data may not leave the office. Renting a GPU suits a trial: run the model you would buy hardware for, measure the real use for a few weeks, then decide.</p>
+      </div>
+      <div>
+        <h4>A company</h4>
+        <p>Steady, high volume across many people can keep servers busy enough to pay off, and owning them gives full control over data and versions. Spiky or short work, such as processing an archive once or a project lasting a few months, suits rented GPUs or a hosted API, because you pay only while the work runs. Many companies combine the two: their own servers for everyday and sensitive work, and a hosted service for peaks (<a href="#/learn/team">chapter 10</a>).</p>
+      </div>
+    </div>
+    <p class="lrn-p">For a company, data protection and the place where the model runs often matter more than price: which data may go to which provider, in which country and under which contract. Some hosted providers run open models in the EU, and the Costs page names one when its price list has it. Check these questions with your company's own legal and compliance people; this guide cannot answer them for you.</p>
+
+    <!-- 6 · Checklist -->
+    <h3 class="lrn-h3">Questions to answer before you decide</h3>
+    <ul class="lrn-check lrn-cost-check">
+      <li><label><input type="checkbox"><span>How many tokens a month will you use, and how sure is that number? A month on a hosted API gives you a measured figure.</span></label></li>
+      <li><label><input type="checkbox"><span>Is the use steady through the day and the week, or does it come in peaks?</span></label></li>
+      <li><label><input type="checkbox"><span>Which data will go into the model, and may it leave your computer, your office or your country?</span></label></li>
+      <li><label><input type="checkbox"><span>Is a model that fits your budget good enough for your tasks? Test it with your own examples first.</span></label></li>
+      <li><label><input type="checkbox"><span>Who will install, update and repair the system, and how many hours a month will that take?</span></label></li>
+      <li><label><input type="checkbox"><span>What happens when the machine fails: is there a spare, a repair contract or a fallback service?</span></label></li>
+      <li><label><input type="checkbox"><span>For how many years will you use the hardware, and what replaces it afterwards?</span></label></li>
+      <li><label><input type="checkbox"><span>Are your prices current? Graphics cards, memory and API prices change often.</span></label></li>
+    </ul>
+
+    <!-- 7 · Costs page -->
+    <h3 class="lrn-h3">Try it with your own numbers</h3>
+    <p class="lrn-p">The Costs page does this calculation for a model you choose. You say who will use it and how, and it compares buying a suitable machine, renting a GPU and a hosted API for that model, with prices from its own price list. Paid closed assistants appear as a reference.</p>
+    <div class="lrn-actions"><a class="btn" href="#/costs">Open the Costs page</a></div>
+    <p class="fine lrn-mt">This chapter gives general guidance only. Prices are examples; before a business decision, check current prices and ask your own finance and legal people.</p>
+  </div>
+</section>
+
+<!-- ================= 12 · LICENCES ================= -->
+<section class="lrn-ch" id="lrn-licences" data-ch="licences" aria-labelledby="lrn-lic-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 12</span>
+      <h2 class="headline" id="lrn-lic-h">Licences in plain words</h2>
+      <p class="lead lrn-sum">Every downloadable model comes with a licence; most allow commercial use, and some add conditions for large companies or hosted services.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="lrn-cols">
+      <div>
+        <h3 class="lrn-h3 lrn-mt0">Open weights and open source</h3>
+        <p class="lrn-p">Most models in this guide are open-weight: you may download and run the trained weights. That does not include the training data or the code used for training. A few projects publish all of it, for example Olmo from Ai2 and Apertus from the Swiss AI Initiative, both in the model list. The Open Source Initiative published a definition of open-source AI in 2024 that asks for the weights, the code and detailed information about the training data.</p>
+      </div>
+      <div>
+        <h3 class="lrn-h3 lrn-mt0">Licence types you will meet</h3>
+        <dl class="lrn-dl">
+          <dt>Permissive</dt><dd>Apache-2.0 and MIT allow use, changes and commercial use by companies of any size. You keep the licence text and copyright notices.</dd>
+          <dt>Custom, with conditions</dt><dd>Commercial use is allowed within limits: a revenue level above which you need a paid licence, a separate agreement for companies that sell access to the model as an online service, or a duty to show the model's name in your product.</dd>
+          <dt>Non-commercial</dt><dd>Research and personal use only. The popular XTTS-v2 voice model is an example.</dd>
+          <dt>Gated</dt><dd>On Hugging Face, a gated model asks you to sign in and accept its terms before downloading, and some wait for approval. Apertus 1.5 is gated this way.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="lrn-demo lrn-panel" aria-labelledby="lrn-lic-cap">
+      <figcaption class="lrn-read" id="lrn-lic-cap">The licences of the text models in the model list, grouped. The note under each licence is a short summary taken from the model's page.</figcaption>
+      <div class="segmented segmented-sm" role="group" aria-label="Filter licences" id="lrn-lic-filter"></div>
+      <div class="lrn-lic" id="lrn-lic-list" aria-live="polite"></div>
+    </figure>
+    <p class="fine">This is a simplified summary and does not replace legal advice. Licences change between versions, so read the licence file in the model's repository and ask your legal team before your business depends on a model. The programs you use have licences too; the tool list in <a href="#/learn/tools">chapter 7</a> notes them.</p>
+  </div>
+</section>
+
+<!-- ================= 13 · GLOSSARY ================= -->
+<section class="lrn-ch" id="lrn-glossary" data-ch="glossary" aria-labelledby="lrn-gl-h">
+  <header class="lrn-band tone-ink" data-pattern="dashes" data-pattern-fade="corner">
+    <div class="wrap">
+      <span class="overline lrn-no">Chapter 13</span>
+      <h2 class="headline" id="lrn-gl-h">Glossary</h2>
+      <p class="lead lrn-sum">Every term used in this guide, explained in one or two sentences.</p>
+    </div>
+  </header>
+  <div class="wrap lrn-body">
+    <div class="field lrn-gl-search">
+      <label class="lbl" for="lrn-gl-in">Find a term</label>
+      <input type="search" id="lrn-gl-in" autocomplete="off" placeholder="For example “token” or “VRAM”">
+      <span class="fine" id="lrn-gl-count" aria-live="polite"></span>
+    </div>
+    <div class="lrn-gloss" id="lrn-gloss">
+      <details><summary>Active parameters</summary><p>In a mixture-of-experts model, the parameters actually used for each token. They set the speed, while the total sets the memory needed.</p></details>
+      <details><summary>Amortisation</summary><p>Spreading the price of a purchase over the months or years it is used, so that it can be compared with a monthly bill. For hardware, accountants call this depreciation.</p></details>
+      <details><summary>API</summary><p>An agreed way for one program to send requests to another. Engines offer an API so that chat apps and your own programs can use the model.</p></details>
+      <details><summary>AWQ and GPTQ</summary><p>Two methods for storing a model at 4-bit, used on graphics-card servers with engines such as vLLM and SGLang.</p></details>
+      <details><summary>Bandwidth</summary><p>How many gigabytes per second a memory can deliver. It sets the upper limit for how fast a model writes.</p></details>
+      <details><summary>Base model</summary><p>A model straight after its main training, before it was taught to follow instructions. For chat you want the instruction-tuned version, often marked “it” or “Instruct”.</p></details>
+      <details><summary>Batching</summary><p>Working on several users' requests in the same step. The weights are read once for all of them, so the machine's total output grows.</p></details>
+      <details><summary>BF16 and FP16</summary><p>16-bit number formats. Most models are trained and first published in BF16, which takes 2 bytes per parameter.</p></details>
+      <details><summary>Break-even</summary><p>The point at which two options have cost the same in total. After it, the option with the lower monthly cost is ahead.</p></details>
+      <details><summary>Cached input</summary><p>Input that repeats the beginning of a recent request, such as a long instruction or the earlier part of a chat. Many providers charge less for it.</p></details>
+      <details><summary>Closed model</summary><p>A model whose weights are not published. You can use it only through the vendor's own app or API.</p></details>
+      <details><summary>Concurrent users</summary><p>People waiting for an answer at the same moment. It is much lower than the total number of users, and it decides how much hardware a shared service needs.</p></details>
+      <details><summary>Context</summary><p>All the text a model can see at once: instructions, conversation, documents and its own answer. It is measured in tokens.</p></details>
+      <details><summary>CPU</summary><p>The computer's main processor. It can run models from system RAM, but more slowly than a graphics card.</p></details>
+      <details><summary>CUDA, ROCm, Metal and Vulkan</summary><p>Software layers that let programs calculate on graphics cards: CUDA for NVIDIA, ROCm for AMD, Metal for Apple, and Vulkan for cards from most makers.</p></details>
+      <details><summary>Dense model</summary><p>A model that uses all of its parameters for every token.</p></details>
+      <details><summary>Diffusion model</summary><p>A model that makes pictures or video by removing noise step by step, guided by a text description.</p></details>
+      <details><summary>Embedding</summary><p>A list of numbers that represents the meaning of a piece of text. Texts with similar meaning get similar numbers, which makes search by meaning possible.</p></details>
+      <details><summary>Engine</summary><p>The program that loads a model and calculates its output, for example llama.cpp, MLX or vLLM. Also called an inference engine or runtime.</p></details>
+      <details><summary>Fine-tune</summary><p>A model trained further on extra examples to change its style or teach it a field. Fine-tunes by third parties are not tested by the original lab.</p></details>
+      <details><summary>FP8, MXFP4 and NVFP4</summary><p>Compact number formats at 8 and 4 bits that newer graphics cards can calculate with directly. Many models are now released in them.</p></details>
+      <details><summary>Gated repository</summary><p>A model page on Hugging Face where you must sign in and accept the terms before downloading.</p></details>
+      <details><summary>Gateway</summary><p>A single entry point in front of the model servers. It handles logins, limits, logging and routing to the right model.</p></details>
+      <details><summary>GGUF</summary><p>A single-file model format used by llama.cpp and the apps built on it. It holds the weights, usually quantised, and the settings needed to run them.</p></details>
+      <details><summary>GPU</summary><p>Graphics processing unit, the chip on a graphics card. It does many calculations in parallel and has fast memory of its own, which suits AI models.</p></details>
+      <details><summary>Hosted API</summary><p>A service that runs a model on the provider's servers and answers requests sent over the internet. You pay per token.</p></details>
+      <details><summary>Hugging Face</summary><p>The website where most open models are published and downloaded.</p></details>
+      <details><summary>Inference</summary><p>Running a trained model to get an output. Training builds the model; inference uses it.</p></details>
+      <details><summary>Input and output tokens</summary><p>Input tokens are the text sent to the model, including documents and the conversation so far. Output tokens are the text it writes. Output usually costs several times as much per token.</p></details>
+      <details><summary>Interface</summary><p>The part you work with: a chat window, a web page or your own program.</p></details>
+      <details><summary>KV cache</summary><p>The engine's store of intermediate results for every token in the context, called conversation memory in this guide. It grows with the context length and with the number of users.</p></details>
+      <details><summary>LoRA</summary><p>A low-cost way to fine-tune a model: a small add-on is trained while the original weights stay unchanged.</p></details>
+      <details><summary>Mixture of experts (MoE)</summary><p>A model design in which each token uses only a few of many expert blocks. It needs memory for all of them but writes about as fast as a smaller model.</p></details>
+      <details><summary>MLX</summary><p>Apple's framework for machine learning on Apple silicon Macs, also used to run language models.</p></details>
+      <details><summary>Model as a service</summary><p>Selling access to a model over the internet, for example as a paid API. Some licences require a separate agreement for this.</p></details>
+      <details><summary>NPU</summary><p>A chip built for AI calculations, found in many recent laptops. It uses little power but needs specially prepared models.</p></details>
+      <details><summary>Offloading</summary><p>Keeping part of a model in system RAM when it does not fit in graphics memory. It works, but more slowly.</p></details>
+      <details><summary>On-demand and reserved</summary><p>Two ways to rent graphics cards. On-demand machines are paid by the hour and can be stopped at any time. Reserved machines are booked for months or years at a lower hourly price.</p></details>
+      <details><summary>Open weights</summary><p>A model whose trained weights you may download and run. The training data and training code may not be included.</p></details>
+      <details><summary>OpenAI-compatible API</summary><p>An API that accepts the same requests as OpenAI's online service, so programs written for that service work with a local engine once you change the address.</p></details>
+      <details><summary>Parameter</summary><p>One of the numbers a model learned during training, also called a weight. Model sizes are counted in billions of parameters, written as B.</p></details>
+      <details><summary>Precision</summary><p>How many bits each parameter is stored with. Higher precision is more exact and takes more memory.</p></details>
+      <details><summary>Price per million tokens</summary><p>The usual unit for API prices, often given separately for input and output tokens. A million tokens are about 750,000 English words.</p></details>
+      <details><summary>Prompt</summary><p>The text you send to the model, including instructions and any documents.</p></details>
+      <details><summary>Prompt processing</summary><p>The engine reading the whole prompt before it starts writing. It is limited by calculating power, and a graphics card does it much faster than a processor.</p></details>
+      <details><summary>Q4_K_M</summary><p>A common GGUF quantisation level: about 4.9 bits per weight, with some sensitive parts kept at 6-bit.</p></details>
+      <details><summary>QAT</summary><p>Quantisation-aware training: training a model so that it expects to be stored at low precision. Its 4-bit version loses less quality.</p></details>
+      <details><summary>Quantisation</summary><p>Storing a model's weights with fewer bits to make the file smaller, at a small cost in quality.</p></details>
+      <details><summary>RAG</summary><p>Retrieval-augmented generation: searching your own documents for passages that match a question and adding them to the prompt, so that the model answers from them.</p></details>
+      <details><summary>Reranker</summary><p>A small model that sorts search results by how well they answer the question. It improves document search.</p></details>
+      <details><summary>Safetensors</summary><p>A file format for model weights that cannot run hidden code when loaded. Labs use it for their original releases.</p></details>
+      <details><summary>Seat</summary><p>A paid place for one person in a subscription, usually billed every month.</p></details>
+      <details><summary>Steps</summary><p>In image and video models, the number of rounds of noise removal. More steps take longer.</p></details>
+      <details><summary>System RAM</summary><p>The computer's main memory. It is larger and cheaper than graphics memory, and several times slower.</p></details>
+      <details><summary>Tensor parallel</summary><p>Splitting each layer of a model across several graphics cards so that they work on every token together. Server engines use it to run models larger than one card and to run them faster.</p></details>
+      <details><summary>Thinking model</summary><p>A model that writes out its reasoning before its answer. It does better on hard tasks and takes longer to start answering.</p></details>
+      <details><summary>Token</summary><p>A piece of text that the model reads or writes: a word, part of a word or a punctuation mark. 100 English tokens are about 75 words. Online services count and charge use in tokens.</p></details>
+      <details><summary>Tokens per second</summary><p>How fast a model writes. About 6 is enough to read along; 15 or more feels quick.</p></details>
+      <details><summary>Total cost of ownership</summary><p>Everything a machine costs over its working life: the purchase, the host computer, electricity, staff time, repairs and replacement.</p></details>
+      <details><summary>Unified memory</summary><p>One memory pool shared by the processor and the graphics part, as in Apple silicon Macs and AMD Ryzen AI Max machines.</p></details>
+      <details><summary>Utilisation</summary><p>The share of time hardware is actually busy. Hardware costs the same when idle, so higher utilisation means a lower cost per token.</p></details>
+      <details><summary>Vector store</summary><p>A database that stores embeddings and finds the ones closest to a question.</p></details>
+      <details><summary>VRAM</summary><p>The memory on a graphics card. It is fast but limited in size.</p></details>
+      <details><summary>Weights</summary><p>Another word for parameters: the learned numbers in a model file.</p></details>
+    </div>
+    <p class="fine lrn-gl-empty" id="lrn-gl-empty" hidden>No term matches. Try a shorter word.</p>
+  </div>
+</section>
+
+<!-- ================= NEXT ================= -->
+<section class="lrn-next" aria-labelledby="lrn-next-h">
+  <div class="wrap">
+    <h2 id="lrn-next-h" class="lrn-h2s">What to do next</h2>
+    <div class="lrn-next-grid">
+      <a class="lrn-next-card primary" href="#/"><span class="label">Machine and sizes</span><span class="lrn-path-t">Check what fits your machine</span><span class="fine">Set your memory and see which model sizes run on it, and how fast.</span></a>
+      <a class="lrn-next-card" href="#/models"><span class="label">Models</span><span class="lrn-path-t">Find models for your hardware</span><span class="fine">See which named models fit, what each is good at and how to start it.</span></a>
+      <a class="lrn-next-card" href="#/costs"><span class="label">Costs</span><span class="lrn-path-t">Compare buying with renting</span><span class="fine">See what the same use costs on your own hardware, through a hosted API or on a rented GPU.</span></a>
+      <a class="lrn-next-card" href="#/calculator"><span class="label">Calculator</span><span class="lrn-path-t">Work out memory and speed</span><span class="fine">Set model size, precision, context and number of users yourself.</span></a>
+    </div>
+  </div>
+</section>
+
+</div>

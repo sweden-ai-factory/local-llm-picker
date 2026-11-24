@@ -1,0 +1,67 @@
+{
+  "_comment": "Builder-side adjustments to the research data. native_bits: average bits per weight of the released files when the model ships already compressed (FP8 about 8.2, FP4/INT4 about 4.5-4.8). params_resident_b: parameters that must sit in fast memory when part of the checkpoint is a lookup table that can stay on disk. Sources: models-llm-notes.md.",
+  "ministral-3-3b": {
+    "native_bits": 8.2
+  },
+  "ministral-3-14b": {
+    "native_bits": 8.2
+  },
+  "devstral-small-2-24b": {
+    "native_bits": 8.2
+  },
+  "mistral-small-4-119b": {
+    "native_bits": 8.2
+  },
+  "mistral-medium-3.5-128b": {
+    "native_bits": 8.2
+  },
+  "glm-5.3-flash": {
+    "native_bits": 8.2
+  },
+  "glm-5.3": {
+    "native_bits": 8.2
+  },
+  "ling-3.1-flash-1019": {
+    "native_bits": 8.2
+  },
+  "gpt-oss-20b": {
+    "native_bits": 4.6
+  },
+  "gpt-oss-120b": {
+    "native_bits": 4.6
+  },
+  "kimi-k2.7-code": {
+    "native_bits": 4.5
+  },
+  "kimi-k3.1-pro": {
+    "native_bits": 4.5
+  },
+  "minimax-m3.1-flash": {
+    "native_bits": 4.8
+  },
+  "inkling-2-small": {
+    "native_bits": 4.5
+  },
+  "deepseek-v4.1-flash-1017": {
+    "native_bits": 4.8,
+    "params_resident_b": 552
+  },
+  "mimo-v2.6-flash": {
+    "native_bits": 4.8
+  },
+  "nemotron-3.5-bolt-74b-a9b": {
+    "native_bits": 2.7
+  },
+  "qwen3.8-flash-next": {
+    "params_resident_b": 129
+  },
+  "gemma-4-e2b": {
+    "params_resident_b": 2.3
+  },
+  "gemma-4-e4b": {
+    "params_resident_b": 4.5
+  },
+  "inkling-2-mini": {
+    "native_bits": 5.9
+  }
+}

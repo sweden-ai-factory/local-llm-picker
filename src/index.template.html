@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local LLM Picker</title>
+<meta name="description" content="Find out which open AI models your own computer or server can run, how fast they will be, and what to download.">
+<!--THEME:rise-->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%23009CA6'/%3E%3Ctext x='32' y='45' font-family='Lato,Segoe UI,Arial,sans-serif' font-weight='700' font-size='36' text-anchor='middle' fill='white'%3EL%3C/text%3E%3C/svg%3E">
+<!--/THEME:rise-->
+<!--THEME:open-->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f766e'/%3E%3Ctext x='32' y='45' font-family='system-ui,Segoe UI,Arial,sans-serif' font-weight='700' font-size='36' text-anchor='middle' fill='white'%3EL%3C/text%3E%3C/svg%3E">
+<!--/THEME:open-->
+<!-- rise:head -->
+<style>
+/*STYLES*/
+/*LEARN_CSS*/
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="app-header">
+  <a class="app-id" href="#/" aria-label="Local LLM Picker, start">
+    <!--THEME:rise--><span data-logo="mark" class="app-mark"></span><!--/THEME:rise-->
+    <span class="app-title">Local LLM Picker</span>
+  </a>
+  <nav class="app-path" aria-label="Steps">
+    <ol class="steps">
+      <li data-route="machine"><a href="#/">Machine</a></li>
+      <li data-route="sizes"><a href="#/sizes">Sizes</a></li>
+      <li data-route="picker"><a href="#/models">Models</a></li>
+      <li data-route="costs"><a href="#/costs">Costs</a></li>
+    </ol>
+  </nav>
+  <nav class="app-nav" aria-label="More">
+    <a href="#/calculator" data-route="calculator">Calculator</a>
+    <a href="#/learn" data-route="learn">Learn</a>
+  </nav>
+  <button class="btn btn-quiet btn-sm app-reset" type="button" data-open="resetDialog" data-ui="reset" aria-label="Start over" title="Start over: clear all settings"><span class="app-reset-t">Start over</span></button>
+  <span class="partner-logo tone-ink"><img src="<!--IMG:sweden-ai-factory.webp-->" alt="Sweden AI Factory" width="1500" height="430"></span>
+</header>
+
+<main id="main" class="app-body">
+  <!-- ========== 1 MACHINE ========== -->
+  <section id="view-machine" data-view="machine">
+    <div class="wrap view" id="machineBody"></div>
+  </section>
+
+  <!-- ========== 2 SIZES ========== -->
+  <section id="view-sizes" data-view="sizes" hidden>
+    <div class="wrap view" id="sizesBody"></div>
+  </section>
+
+  <!-- ========== 3 MODELS ========== -->
+  <section id="view-picker" data-view="picker" hidden>
+    <div class="wrap view" id="pickerBody"></div>
+  </section>
+
+  <!-- ========== 4 COSTS ========== -->
+  <section id="view-costs" data-view="costs" hidden>
+    <div class="wrap view" id="costsBody"></div>
+  </section>
+
+  <!-- ========== CALCULATOR ========== -->
+  <section id="view-calculator" data-view="calculator" hidden>
+    <div class="wrap view" id="calcBody"></div>
+  </section>
+
+  <!-- ========== LEARN ========== -->
+  <section id="view-learn" data-view="learn" hidden>
+<!--LEARN_HTML-->
+  </section>
+</main>
+
+<footer class="app-footer">
+  <div class="wrap footer-grid">
+    <p>All numbers on this page are estimates. Real speed and memory use depend on the program you use, the driver, the exact model file and what else is running. Model data last checked <span id="dataDate"></span>.</p>
+    <p><span class="label">Method</span> Memory is the model size at the chosen precision plus the conversation memory (KV cache) plus a small fixed overhead. Speed is estimated from memory bandwidth, because generating text is limited by how fast the model can be read from memory.</p>
+      <p class="about"><span class="label">About</span> Local LLM Picker was created by Benedikt Neyses and Erdzan Hodzic, with help from Claude (Anthropic). It is open source under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache License 2.0</a>. Source code and data: <a href="https://github.com/sweden-ai-factory/local-llm-picker" target="_blank" rel="noopener">github.com/sweden-ai-factory/local-llm-picker</a>.</p>
+  </div>
+</footer>
+
+</div>
+
+<!-- Hardware dialog -->
+<dialog class="modal hw-dialog" id="hwDialog" aria-labelledby="hwTitle">
+  <div class="dialog-head">
+    <h2 id="hwTitle">Your hardware</h2>
+    <button class="btn btn-icon" type="button" id="hwClose" aria-label="Close" data-ui="close"></button>
+  </div>
+  <div class="dialog-body" id="hwBody"></div>
+  <div class="dialog-foot" id="hwFoot"></div>
+</dialog>
+
+<!-- Start over: confirmation -->
+<dialog class="modal reset-dialog" id="resetDialog" aria-labelledby="resetTitle">
+  <div class="dialog-head"><h2 id="resetTitle">Start over?</h2></div>
+  <div class="dialog-body"><p>This clears your machine, models, costs and other settings and returns to step 1.</p></div>
+  <div class="dialog-foot">
+    <button class="btn btn-quiet" type="button" data-close>Cancel</button>
+    <button class="btn btn-primary" type="button" id="resetGo">Start over</button>
+  </div>
+</dialog>
+
+<!-- rise:scripts -->
+<!--THEME:rise-->
+<script>
+/* Light theme and English only: override whatever another RISE page stored in this browser. */
+(function () {
+  if (!window.RISE) return;
+  RISE.theme.set('light', false);
+  RISE.theme.init = function () { RISE.theme.set('light', false); };
+  RISE.lang.init = function () { RISE.lang.set('en', false); };
+})();
+</script>
+<!--/THEME:rise-->
+<script>
+/*DATA*/
+</script>
+<script>
+/*ENGINE*/
+</script>
+<script>
+/*APP*/
+</script>
+<script>
+/*LEARN_JS*/
+</script>
+</body>
+</html>

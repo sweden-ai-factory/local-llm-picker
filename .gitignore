@@ -1,0 +1,23 @@
+﻿# build output (node build.mjs writes dist/Local-LLM-Picker-plain.html, THEME=rise dist/Local-LLM-Picker.html)
+dist/
+
+# build intermediate of the RISE build (written next to the output)
+*.src.html
+
+# local tooling and scratch
+.claude/
+.test/
+archive/
+/screenshots/
+
+# unused fonts from the first design (the build now embeds the RISE fonts)
+src/fonts/
+
+# the first design's RISE logo image (the header uses the RISE mark from the design system)
+src/img/rise.webp
+
+# operating system and editor files
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
